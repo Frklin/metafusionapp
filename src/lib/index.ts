@@ -107,7 +107,7 @@ export function MetaMaskStore() {
       });
 
       const balanceInEth = (parseInt(balanceInWei) / 1000000000000000000).toString()
-      balance.set(balanceInEth);
+      balance.set(balanceFormatter(balanceInEth));
 
     } catch (error) {
       console.error("Error fetching balance:", error);
@@ -123,4 +123,15 @@ export function MetaMaskStore() {
     balance,
     init,
   };
+}
+
+
+
+
+function balanceFormatter(balance: string) {
+  return parseFloat(balance).toFixed(2).toString();
+}
+
+function addressFormatter(address: string) {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }

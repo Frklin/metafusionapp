@@ -87,11 +87,5 @@
   </div>
 </header>
 
-<style>
-  header.sticked {
-    background-color: #121212;
-    color: white;
-    transition: background-color 0.5s, color 0.5s; /* Smooth transition for background and text color */
-  }
-</style>
+
 
