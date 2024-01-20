@@ -1,4 +1,5 @@
 <script>
+  // @ts-nocheck
     import "../app.css";
     import "@fontsource/montserrat"
     import '@fontsource/poppins'

@@ -1,4 +1,6 @@
 <script lang='ts'>
+    // @ts-nocheck
+
     // export let coverPath: string;
 
     import Cover from '$lib/assets/cover.png';

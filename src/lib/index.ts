@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { setSigner, setContract} from "./metafusion_interactions";
 
 const getMetaMaskPresent = () =>
   typeof window !== "undefined" && typeof window.ethereum !== "undefined";
@@ -16,6 +17,8 @@ export function MetaMaskStore() {
   const loaded = writable(false);
   const isMetaMaskPresent = writable(getMetaMaskPresent());
   const walletState = writable(getLocalStorageState());
+  const balance = writable("0");
+
 
   const handleAccountsChanged = (/** @type {any} */ newAccounts) => {
     if (
@@ -25,8 +28,9 @@ export function MetaMaskStore() {
     ) {
       const account = newAccounts[0];
       walletState.set({ account });
-      // getSigner();
-      // getContract();
+      updateBalance(newAccounts[0]);
+      setSigner();
+      setContract();
     } else {
       walletState.set({});
     }
@@ -40,7 +44,8 @@ export function MetaMaskStore() {
   const init = async () => {
     // if metamask is not present, do nothing
     if (!getMetaMaskPresent()) {
-      return;
+      // const balanceInEth = window.ethereum.utils.fromWei(balanceInWei, 'ether');
+      // balance.set(balanceInEth);
     }
 
     // if we have an account in local storage, we can assume the user left the page with metamask connected last time
@@ -53,7 +58,7 @@ export function MetaMaskStore() {
       if (accountResponse && accountResponse.length && accountResponse[0]) {
         const account = accountResponse[0];
         walletState.set({ account });
-
+        updateBalance(account);
         // watch for account changes from the extension
         window.ethereum?.on("accountsChanged", handleAccountsChanged);
       }
@@ -92,7 +97,20 @@ export function MetaMaskStore() {
     }
   };
 
+  const updateBalance = async (account) => {
+    try {
+      const balanceInWei = await window.ethereum?.request({
+        method: "eth_getBalance",
+        params: [account, "latest"],
+      });
 
+      const balanceInEth = (parseInt(balanceInWei) / 1000000000000000000).toString()
+      balance.set(balanceInEth);
+
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    }
+  };
 
 
   return {
@@ -100,6 +118,7 @@ export function MetaMaskStore() {
     walletState,
     loaded,
     connect,
+    balance,
     init,
   };
 }

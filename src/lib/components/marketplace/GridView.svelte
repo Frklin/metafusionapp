@@ -1,4 +1,5 @@
 <script lang="ts">
+// @ts-nocheck
 
     export let items: any;
     export let itemType: number;

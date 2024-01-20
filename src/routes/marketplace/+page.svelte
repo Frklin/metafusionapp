@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 
     import { NFTTypes } from '$lib/constants';
     import { onMount } from 'svelte';
@@ -23,8 +25,8 @@
     import TableView from '$lib/components/marketplace/TableView.svelte';
 
     let selectedView = 'table';
-
-    let selectedNFTType = NFTTypes.Cards;
+    let selectedNFTType = 'Cards';
+    let filterTabOpen = false;
 
     let cards = [
         { id: 30, n: 1032, price: 2.109, img_path: image1574, prompts:
@@ -201,7 +203,7 @@
 
     <!-- BOTTOM PART -->    
     <div class="flex w-full px-10 flex-col items-start self-stretch bg-background">
-        <TypeSelector selectedNFTType={'Cards'}/>
+        <TypeSelector bind:selectedNFTType/>
 
         <!-- INFOS -->
 
@@ -212,10 +214,10 @@
                     <ListView items={cards} itemType={2}/>
                 {/if}
                 {#if selectedView === 'grid'}
-                    <GridView items={cards} itemType={2} filterTabOpen={false}/>
+                    <GridView items={cards} itemType={2} bind:filterTabOpen/>
                 {/if}
                 {#if selectedView === 'table'}
-                    <TableView items={cards} itemType={2} filterTabOpen={false}/>
+                    <TableView items={cards} itemType={2} bind:filterTabOpen/>
                 {/if}
             </div>
         </div>

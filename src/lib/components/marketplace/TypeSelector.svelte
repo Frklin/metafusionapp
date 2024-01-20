@@ -1,4 +1,6 @@
 <script lang='ts'>
+    // @ts-nocheck
+
     import { NFTTypes } from '$lib/constants';
 
     export let selectedNFTType: string;
@@ -9,8 +11,8 @@
     <div class="bg-background h-full rounded-t-lg">
         <div class="flex flex-row px-10 py-6 gap-4 h-full">
             {#each Object.keys(NFTTypes) as type}
-            <!-- on:click={() => selectNFTtype(type)} -->
             <button 
+                on:click={() => selectedNFTType = type}
                 class:bg-white={selectedNFTType === type}
                 class:bg-opacity-15={selectedNFTType === type}
                 class:bg-opacity-0={selectedNFTType !== type}

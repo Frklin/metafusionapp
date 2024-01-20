@@ -1,4 +1,5 @@
 <script>
+// @ts-nocheck
 
 import image1032 from '$lib/assets/NFTs/7843.jpg';
 import prompt1234 from '$lib/assets/Prompts/1234.png';

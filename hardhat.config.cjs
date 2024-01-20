@@ -11,7 +11,7 @@ module.exports = {
       accounts: {
         mnemonic: SEED_PHRASE,
       },
-      chainId: 1337
+      chainId: 31337
     },
   },
 };

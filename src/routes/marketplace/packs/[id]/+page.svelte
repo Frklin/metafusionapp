@@ -1,4 +1,5 @@
 <script>
+// @ts-nocheck
 
     import Pack1032 from '$lib/assets/Packs/5.png';
     import Activity from '$lib/components/itemDetail/Activity.svelte';

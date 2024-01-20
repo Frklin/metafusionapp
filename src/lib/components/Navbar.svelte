@@ -1,6 +1,6 @@
 
 <script>
-  //ts-nocheck
+  // @ts-nocheck
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import { MetaMaskStore } from '$lib';
@@ -12,7 +12,7 @@
   
   let isSticked = writable(false);
   let userBalance;
-  const { walletState, isMetaMaskPresent, connect, loaded, init } =
+  const { walletState, isMetaMaskPresent, connect, loaded, balance, init } =
     MetaMaskStore();
 
 
@@ -58,24 +58,24 @@
         <div class="flex h-full items-center gap-x-3 mr-10">
           {#if $loaded}
             {#if $isMetaMaskPresent}
-              {#if Boolean($walletState.account)}
-                <button class="text-primary divide-x divide-white/20 flex h-full items-center rounded-xl bg-white/10 backdrop-blur-lg px-4 py-3 font-semibold hover:bg-white/20 gap-x-2">
-                  <div class="flex gap-2">
-                    <img src={WalletIcon} class="h-6 w-6" alt="wallet" />
-                    <span class="hidden lg:inline-block">20 ETH</span>
-                  </div>
-                  <span class="hidden px-2 lg:inline-block">{walletID.substring(0,4)}...{walletID.substring(walletID.length - 2)}</span>
-                </button>
-              {:else}
-                <button on:click={connect} class="text-primary flex h-full items-center rounded-xl bg-white/10 backdrop-blur-lg px-4 py-3 font-semibold hover:bg-white/20 gap-x-2">
-                  <img src={WalletIcon} class="h-6 w-6" alt="wallet" />
-                  <span class="hidden lg:inline-block">Connect Wallet</span>
-                </button>
-              {/if}
-              {:else}
-              <p>Please install MetaMask</p>
+                {#if Boolean($walletState.account)}
+                    <button class="text-primary divide-x divide-white/20 flex h-full items-center rounded-xl bg-white/10 backdrop-blur-lg px-4 py-3 font-semibold hover:bg-white/20 gap-x-2">
+                        <div class="flex gap-2">
+                            <img src={WalletIcon} class="h-6 w-6" alt="wallet" />
+                            <span class="hidden lg:inline-block">{$balance} ETH</span>
+                        </div>
+                        <span class="hidden px-2 lg:inline-block">{walletID.substring(0,4)}...{walletID.substring(walletID.length - 2)}</span>
+                    </button>
+                {:else}
+                    <button on:click={connect} class="text-primary flex h-full items-center rounded-xl bg-white/10 backdrop-blur-lg px-4 py-3 font-semibold hover:bg-white/20 gap-x-2">
+                        <img src={WalletIcon} class="h-6 w-6" alt="wallet" />
+                        <span class="hidden lg:inline-block">Connect Wallet</span>
+                    </button>
+                {/if}
+            {:else}
+                <p>Please install MetaMask</p>
             {/if}
-          {/if}
+        {/if}
           <button class="text-primary flex h-full items-center rounded-xl bg-white/10 px-4 py-3 backdrop-blur-lg font-semibold hover:bg-white/20">
             <img src={ProfileIcon} class="h-6 w-6" alt="profile" />
           </button>

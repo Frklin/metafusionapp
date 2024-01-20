@@ -40,6 +40,8 @@
 		"@fontsource/inter": "^5.0.16",
 		"@fontsource/montserrat": "^5.0.16",
 		"@fontsource/poppins": "^5.0.8",
+		"@nomicfoundation/solidity-analyzer": "^0.1.1",
+		"@nomicfoundation/solidity-analyzer-linux-x64-musl": "^0.1.1",
 		"hardhat": "^2.19.4"
 	}
 }

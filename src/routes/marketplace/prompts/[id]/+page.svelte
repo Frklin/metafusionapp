@@ -1,4 +1,5 @@
 <script>
+// @ts-nocheck
 
     import Prompt1032 from '$lib/assets/Prompts/1234.png';
     import Activity from '$lib/components/itemDetail/Activity.svelte';
