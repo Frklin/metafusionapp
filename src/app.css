@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+body {
+    background-color: #121212;
+  }
+  
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #b6b6b6 transparent; /* Colore della barra di scorrimento e colore dello sfondo della barra di scorrimento */
+  }
+  
+  .scrollbar::-webkit-scrollbar {
+    width: 12px; /* Larghezza della barra di scorrimento */
+  }
+  
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Colore dello sfondo della traccia della barra di scorrimento */
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #b6b6b6; /* Colore della barra di scorrimento */
+    border-radius: 6px; /* Raggio dell'angolo arrotondato della barra di scorrimento */
+    border: 3px solid transparent; /* Creazione di uno spazio trasparente intorno alla barra di scorrimento */
+    background-clip: content-box; /* Assicura che lo spazio trasparente non mostri lo sfondo della barra di scorrimento */
+  }
+  
+  
+  
+  .active {
+      background-color: rgba(255, 255, 255, 0.8); /* Active state color */
+      color: #202020;
+  }
+  
