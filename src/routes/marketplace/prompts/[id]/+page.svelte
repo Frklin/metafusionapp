@@ -13,10 +13,10 @@
             id: 1,
             img_path: Prompt1032,
             n: 1032,
-            price: 0.1,
+            price: 1.0,
             owner: '0x1234567890123456789012345678901234567890',
             owner_name: 'Francesco',
-            edition: 1
+            collection: 1s
         }
     
     
@@ -39,7 +39,7 @@
                     <div class="lg:col-span-4 flex flex-col gap-6">
                         <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner_name} itemEdition={prompt.edition}/>
     
-                        <PriceBox itemPrice={prompt.price} />
+                        <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={1}  />
     
                         <HistoryPrice />
     

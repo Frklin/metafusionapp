@@ -13,10 +13,10 @@ import PromptList from '$lib/components/itemDetail/PromptList.svelte';
 
 
 let card = {
-        id: 1,
+        id: 43423800344763272947996792372586800463640240757845045274316701742183960645741n,
         img_path: image1032,
         n: 1032,
-        price: 0.1,
+        price: 1.0,
         owner: '0x1234567890123456789012345678901234567890',
         owner_name: 'Francesco',
         prompts:
@@ -24,7 +24,7 @@ let card = {
             {promptid: `1234`, category: 'character', name: 'Human', rarity: 0.6, price: 0.1, img_path: prompt1234},
             {promptid: `1423`, category: 'handoff', name: 'knife', rarity: 0.3, price: 0.2, img_path: prompt1423},
         ],
-        edition: 1
+        collection: 1
     }
 
 
@@ -45,9 +45,9 @@ let card = {
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
-                    <ItemInfo itemType={2} itemNumber={card.n} itemOwner={card.owner_name} itemEdition={card.edition}/>
+                    <ItemInfo itemType={2} itemNumber={card.n} itemOwner={card.owner_name} itemEdition={card.collection}/>
 
-                    <PriceBox itemPrice={card.price} />
+                    <PriceBox itemID={card.id} itemPrice={card.price} itemType={2} />
 
                     <HistoryPrice />
 

@@ -29,7 +29,7 @@ export function MetaMaskStore() {
       const account = newAccounts[0];
       walletState.set({ account });
       updateBalance(newAccounts[0]);
-      setSigner();
+      // setSigner();
       setContract();
     } else {
       walletState.set({});
@@ -59,6 +59,8 @@ export function MetaMaskStore() {
         const account = accountResponse[0];
         walletState.set({ account });
         updateBalance(account);
+        setSigner();
+        setContract();
         // watch for account changes from the extension
         window.ethereum?.on("accountsChanged", handleAccountsChanged);
       }

@@ -932,91 +932,96 @@ async function setSigner() {
     let sig = await prov.getSigner()
     provider = prov;
     signer = sig
-    console.log("signer has changed." + signer)
+    // console.log("signer has changed." + await signer.getAddress())
 }
 
 async function setContract() {
+    await setSigner()
+    console.log(signer)
     contract = new ethers.Contract(contract_address, abi, signer)
+    contract = contract.connect(signer)
     console.log("contract has changed.")
 }
 
   
-async function forgeCollection(contract: Contract, collection: number) {
+async function forgeCollection(collection: number) {
     let tx = await contract.forgeCollection(collection);
     await tx.wait();
     return tx;
 }
   
-async function forgePacket(contract: Contract, collection: number, fees: string = PACKET_COST) {
+async function forgePacket(collection: number, fees = PACKET_COST) {
     let tx = await contract.forgePacket(collection, {value: ethers.parseEther(fees)});
     await tx.wait();
     return tx;
 }
   
-async function listPacket(contract: Contract, packetId: number, price: string) {
+async function listPacket(packetId: number, price: string) {
     let tx = await contract.listPacket(packetId, ethers.parseEther(price));
     await tx.wait();
     return tx;
 }
   
-async function buyPacket(contract: Contract, packetId: number, price: string, txFees: string = TRANSACTION_FEES) {
+async function buyPacket(packetId: number, price: string, txFees = TRANSACTION_FEES) {
     let val = ethers.parseEther(price) + ethers.parseEther(txFees);
     let tx = await contract.buyPacket(packetId, {value: val});
     await tx.wait();
     return tx;
 }
   
-async function getOwnerOfPacket(contract: Contract, packetId: number) {
+async function getOwnerOfPacket(packetId: number) {
     return await contract.ownerOfPacket(packetId);
 }
   
-async function openPacket(contract: Contract, packetId: number, fees: string = PACKET_OPENING_FEES) {
+async function openPacket(packetId: number, fees = PACKET_OPENING_FEES) {
     let tx = await contract.openPacket(packetId, { value: ethers.parseEther(fees) });
     await tx.wait();
     return tx;
 }
   
-async function listPrompt(contract: Contract, promptId: number, price: string) {
+async function listPrompt(promptId: number, price: string) {
     let tx = await contract.listPrompt(promptId, ethers.parseEther(price));
     await tx.wait();
     return tx;
 }
   
-async function buyPrompt(contract: Contract, promptId: number, price: string, txFees: string = TRANSACTION_FEES) {
+async function buyPrompt(promptId: number, price: string, txFees = TRANSACTION_FEES) {
     let val = ethers.parseEther(price) + ethers.parseEther(txFees);
     let tx = await contract.buyPrompt(promptId, {value: val});
     await tx.wait();
     return tx;
 }
   
-async function getOwnerOfPrompt(contract: Contract, promptId: number) {
+async function getOwnerOfPrompt(promptId: number) {
     return await contract.ownerOfPrompt(promptId);
 }
   
-async function createImage(contract: Contract, promptIds: number[], fees: string = GENERATION_FEES) {
+async function createImage(promptIds: number[], fees = GENERATION_FEES) {
     let tx = await contract.createImage(promptIds, { value: ethers.parseEther(fees) });
     await tx.wait();
     return tx;
 }
   
-async function listImage(contract: Contract, imageId: number, price: string) {
+async function listImage(imageId: number, price: string) {
     let tx = await contract.listCard(imageId, ethers.parseEther(price));
     await tx.wait();
     return tx;
 }
   
-async function buyImage(contract: Contract, imageId: number, price: string, txFees: string = TRANSACTION_FEES) {
+async function buyImage(imageId: number, price: string, txFees = TRANSACTION_FEES) {
     let val = ethers.parseEther(price) + ethers.parseEther(txFees);
+    // console.log(contract)
+    // console.log(signer)
     let tx = await contract.buyCard(imageId, {value: val});
     await tx.wait();
     return tx;
 }
   
-async function getOwnerOfImage(contract: Contract, imageId: number) {
+async function getOwnerOfImage(imageId: number) {
     return await contract.ownerOfCard(imageId);
 }
   
-async function destroyImage(contract: Contract, imageId: number, fees: string = DESTRUCTION_FEES) {
+async function destroyImage(imageId: number, fees = DESTRUCTION_FEES) {
     let tx = await contract.burnImageAndRecoverPrompts(imageId, {value: ethers.parseEther(fees)});
     await tx.wait();
     return tx;

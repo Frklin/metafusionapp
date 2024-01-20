@@ -1,8 +1,23 @@
 <script lang="ts">
+    import { buyPacket, buyPrompt, buyImage } from '$lib/metafusion_interactions';
+    export let itemID: number;
     export let itemPrice: number;
+    export let itemType: number;
 
     function convertToUSDT() {
         return itemPrice * 2470;
+    }
+
+
+    function buyItem() {
+        if (itemType == 0) {
+            buyPacket(itemID, itemPrice.toString());
+        } else if (itemType == 1) {
+            buyPrompt(itemID, itemPrice.toString());
+        } else {
+            buyImage(itemID, itemPrice.toString());
+        }
+        
     }
 </script>
 
@@ -18,7 +33,7 @@
 
     <!-- Button -->
     <div class="flex flex-col justify-center items-center w-full h-full  rounded-b-xl">
-        <button class="flex flex-row justify-center items-center w-full h-full bg-button rounded-b-xl">
+        <button on:click={()=>buyItem()} class="flex flex-row justify-center items-center w-full h-full bg-button rounded-b-xl">
             <h4 class="text-sm font-semibold text-primary">Buy Now</h4>
         </button>
     </div>

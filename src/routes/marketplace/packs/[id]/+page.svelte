@@ -16,7 +16,7 @@
             price: 0.1,
             owner: '0x1234567890123456789012345678901234567890',
             owner_name: 'Francesco',
-            edition: 1
+            collection: 1
         }
     
     
@@ -39,7 +39,7 @@
                     <div class="lg:col-span-4 flex flex-col gap-6">
                         <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner_name} itemEdition={pack.edition}/>
     
-                        <PriceBox itemPrice={pack.price} />
+                        <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} />
     
                         <HistoryPrice />
     
