@@ -166,3 +166,24 @@ export function rarityConverter(rarity: number) {
   if (rarity < 0.2) return "bronze";
   return "common";
 }
+
+export function weiToETH(wei: string) {
+  return parseFloat(wei) / 1000000000000000000;
+}
+
+export function categoryConverter(category: number) {
+  switch (category) {
+    case 0:
+      return "character";
+    case 1:
+      return "hats";
+    case 2:
+      return "handoff";
+    case 3:
+      return "colors";
+    case 4:
+      return "glasses";
+    default:
+      return "style";
+  }
+}

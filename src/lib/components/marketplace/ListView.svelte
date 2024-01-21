@@ -1,6 +1,6 @@
 <script lang="ts">
 // @ts-nocheck  
-    import { NFTtypetoString } from '$lib/index.js';
+    import { NFTtypetoString, weiToETH } from '$lib/index.js';
     export let items: any;
     export let itemType: number;
     export let fromWhere: string;
@@ -19,13 +19,13 @@
       </div>
     <div class="flex w-full flex-col divide-y divide-white/10 px-2">
     {#each items as item (item.id)}
-        <a href={'/'+fromWhere+'/'+NFTtypetoString(itemType)+'/'+item.n}>
+        <a href={'/'+fromWhere+'/'+NFTtypetoString(itemType)+'/'+item.id}>
             <div class="flex items-center p-4 hover:bg-white/20 duration-100">
             <img src={item.img_path} alt={`item ${item.n}`} class="w-12 h-12 rounded-full object-cover mr-4" />
             <div class="flex flex-grow items-center justify-between">
                 <div class="flex flex-col">
-                    <span class="text-lg font-bold text-primary">Meta{itemType == 2 ? 'Fusion' : itemType == 1 ? "Prompt" : "Packs"} #{item.n}</span>
-                    <span class="text-sm text-secondary">{item.price} ETH</span>
+                    <span class="text-lg font-bold text-primary">Meta{itemType == 2 ? 'Fusion' : itemType == 1 ? "Prompt" : "Packs"} #{item.id.slice(0,4)}</span>
+                    <span class="text-sm text-secondary">{weiToETH(item.price)} ETH</span>
                 </div>
                 <div class="text-right">
                     <div class="text-sm text-secondary">Last sale: 10.12 ETH</div>

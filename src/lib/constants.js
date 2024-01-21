@@ -15,6 +15,22 @@ export const views =  ['list', 'grid', 'table'];
 
 export const RARITIES = ["common", "bronze", "silver", "gold", "mythic"];
 
+export const RARITY_COLORS = {
+    bronze: 'border-bronze text-bronze',
+    silver: 'border-silver text-silver',
+    gold: 'border-gold text-gold',
+    mythic: 'border-mythic text-mythic',
+  };
+  
+export const CATEGORY_ICONS = {
+    handoff: '$lib/assets/icons/wallet.svg', 
+    character: '$lib/assets/icons/wallet.svg',
+    colors: '$lib/assets/icons/wallet.svg',
+    glasses: '$lib/assets/icons/wallet.svg',
+    hats: '$lib/assets/icons/wallet.svg',
+    style: '$lib/assets/icons/wallet.svg',
+};
+
 
 // function calculateRarity(a: any) {
 //     return a.prompts.reduce((total, prompt) => total + prompt.rarity, 0);

@@ -9,32 +9,45 @@ import HistoryPrice from '$lib/components/itemDetail/HistoryPrice.svelte';
 import ItemInfo from '$lib/components/itemDetail/ItemInfo.svelte';
 import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
 import PromptList from '$lib/components/itemDetail/PromptList.svelte';
+import { page } from '$app/stores';
+import { onMount } from 'svelte';
+
+let cardId;
 
 
+let card = {};
 
-let card = {
-        id: 43423800344763272947996792372586800463640240757845045274316701742183960645741n,
-        img_path: image1032,
-        n: 1032,
-        price: 1.0,
-        owner: '0x6fd304ECb50e48e4358E20027e73298EB72915Df',
-        owner_name: 'Francesco',
-        isListed: true,
-        prompts:
-        [
-            {promptid: `1234`, category: 'character', name: 'Human', rarity: 0.6, price: 0.1, img_path: prompt1234},
-            {promptid: `1423`, category: 'handoff', name: 'knife', rarity: 0.3, price: 0.2, img_path: prompt1423},
-        ],
-        collection: 1
+$: if (cardId) {
+    fetchCardByID(cardId);
+}
+
+async function fetchCardByID(cardID) {
+    try {
+        const cardResponse = await fetch('http://localhost:3000/card/' + cardID);
+        if (!cardResponse.ok) {
+            throw new Error('Network response was not ok');
+        }
+        card = await cardResponse.json();
+        card.img_path = 'http://localhost:3000/card/' + cardId + '/image';
+        card.n = cardId.slice(-4);
+    } catch (err) {
+        error = err;
     }
+}
 
+
+
+onMount(async () => {
+        cardId = $page.params.id; // Get the dynamic parameter from the URL
+        fetchCardByID(cardId); // Fetch the card data based on the ID
+    });
 
 
 </script>
 
 
 
-
+{#if card && card.id}
 <div class="flex w-full flex-col items-start bg-red-400">
     <div class="flex w-full bg-background px-10 pt-10">
         <div class="flex w-full flex-col gap-10 ">
@@ -46,13 +59,13 @@ let card = {
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
-                    <ItemInfo itemType={2} itemNumber={card.n} itemOwner={card.owner_name} itemEdition={card.collection}/>
+                    <ItemInfo itemType={2} itemNumber={card.n} itemOwner={card.owner} itemEdition={card.collectionId}/>
 
                     <PriceBox itemID={card.id} itemPrice={card.price} itemType={2} itemOwner={card.owner} itemListed={card.isListed}/>
 
                     <HistoryPrice />
 
-                    <Activity />
+                    <Activity itemID={card.id} itemType={"card"}/>
                 </div>
             
             </div>
@@ -63,6 +76,8 @@ let card = {
         </div>
     </div>
 </div>
+{/if}
+
 
 
 

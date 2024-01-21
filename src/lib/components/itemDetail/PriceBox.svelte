@@ -1,7 +1,7 @@
 <script lang="ts">
        //@ts-nocheck
     import { buyPacket, buyPrompt, buyImage } from '$lib/metafusion_interactions';
-    import {user_pk} from '$lib/index.js';
+    import {user_pk, weiToETH} from '$lib/index.js';
 	
     import MyCardButtons from './buttons/MyCardButtons.svelte';
 	import MyPromptButtons from './buttons/MyPromptButtons.svelte';
@@ -15,7 +15,7 @@
     export let itemListed: boolean;
 
     function convertToUSDT() {
-        return itemPrice * 2470;
+        return weiToETH(itemPrice) * 2470;
     }
 
 
@@ -30,7 +30,7 @@
         
     }
 
-    $: isMine = itemOwner.toLowerCase() === user_pk;
+    $: isMine = itemOwner === user_pk;
 
     </script>
 
@@ -39,7 +39,7 @@
     <div class="flex flex-col gap-2 p-4">
         <h4 class="text-xs font-normal text-secondary">Current Price</h4>
         <div class="flex flex-row gap-2 items-baseline">
-            <h1 class="text-3xl font-semibold text-white">{itemPrice} ETH</h1>
+            <h1 class="text-3xl font-semibold text-white">{weiToETH(itemPrice)} ETH</h1>
             <h4 class="text-sm font-normal text-secondary">$ {convertToUSDT()}</h4>
         </div>
     </div>
