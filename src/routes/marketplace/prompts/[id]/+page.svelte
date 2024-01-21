@@ -60,7 +60,7 @@
                 <div class="lg:col-span-4 flex flex-col gap-6">
                     <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner} itemEdition={prompt.collectionId}/>
 
-                    <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={"prompt"} itemOwner={prompt.owner} itemListed={prompt.isListed}/>
+                    <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={1} itemOwner={prompt.owner} itemListed={prompt.isListed}/>
 
                     <HistoryPrice />
 
