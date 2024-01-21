@@ -53,18 +53,20 @@
     // ]
 
     let items = [];
-    const pk ='0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
     async function getUserData() {
-        try {
-            const res = await fetch('http://localhost:3000/user/'+pk);
-            const data = await res.json();
-            let cards = data.cards;
-            for(let i=0; i<cards.length; i++){
-                cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
+        if (user_pk){
+            try {
+                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const data = await res.json();
+                console.log(data);
+                let cards = data.cards;
+                for(let i=0; i<cards.length; i++){
+                    cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
+                }
+                items = data.prompts.concat(cards);//.concat(data.packets);
+            } catch (err) {
+                console.error(err);
             }
-            items = data.packets.concat(data.prompts).concat(cards);
-        } catch (err) {
-            console.error(err);
         }
     }
 

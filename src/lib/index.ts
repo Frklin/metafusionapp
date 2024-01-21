@@ -155,25 +155,26 @@ export function NFTtypetoString(type: number) {
 
 
 function setPublicKey(account: string) {
+  console.log("setting public key to ", account);
   user_pk = account;
 }
 
 
-// export function rarityConverter(rarity: number) {
-//   console.log(rarity)
-//   if (rarity < 0.01) return "mythic";
-//   if (rarity < 0.05) return "gold";
-//   if (rarity < 0.1) return "silver";
-//   if (rarity < 0.2) return "bronze";
-//   return "common";
-// }
 export function rarityConverter(rarity: number) {
-  if (rarity == 0) return "mythic";
-  if (rarity == 1) return "gold";
-  // if (rarity == 2) return "silver";
-  if (rarity == 3) return "bronze";
+  console.log(rarity)
+  if (rarity <= 0.005) return "mythic";
+  if (rarity <= 0.02) return "gold";
+  if (rarity <= 0.1) return "silver";
+  if (rarity <= 0.2) return "bronze";
   return "common";
 }
+// export function rarityConverter(rarity: number) {
+//   if (rarity == 0) return "mythic";
+//   if (rarity == 1) return "gold";
+//   // if (rarity == 2) return "silver";
+//   if (rarity == 3) return "bronze";
+//   return "common";
+// }
 
 export function weiToETH(wei: string) {
   return parseFloat(wei) / 1000000000000000000;

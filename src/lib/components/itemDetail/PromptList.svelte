@@ -2,6 +2,7 @@
     //@ts-nocheck
     import { CATEGORIES } from '$lib/constants.js';
     import { categoryConverter } from '$lib/index.js';
+	import PromptCardFull from '../PromptCardFull.svelte';
 
     export let prompts: any;
 
@@ -33,6 +34,7 @@
         <div class="flex flex-row justify-between w-full h-full l p-2 bg-background rounded-b-xl">
             <div class="grid grid-cols-6 w-full gap-3">
               {#each CATEGORIES as category}
+              <!-- <PromptCardFull prompt={getPrompt(category)} />  -->
                 <div class= "gap-2 flex flex-col items-center  border-white/20 h-full p-6">
                   <span class="text-xs text-secondary font-semibold">{category.toUpperCase()}</span>
                   <div class="w-full h-[320px] rounded-xl bg-card_background ">
