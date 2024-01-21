@@ -5,33 +5,77 @@
 
 
 body {
-    background-color: #121212;
-  }
+  background-color: #121212;
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #b6b6b6 transparent; /* Colore della barra di scorrimento e colore dello sfondo della barra di scorrimento */
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 12px; /* Larghezza della barra di scorrimento */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Colore dello sfondo della traccia della barra di scorrimento */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #b6b6b6; /* Colore della barra di scorrimento */
+  border-radius: 6px; /* Raggio dell'angolo arrotondato della barra di scorrimento */
+  border: 3px solid transparent; /* Creazione di uno spazio trasparente intorno alla barra di scorrimento */
+  background-clip: content-box; /* Assicura che lo spazio trasparente non mostri lo sfondo della barra di scorrimento */
+}
+
+
+
+.active {
+    background-color: rgba(255, 255, 255, 0.8); /* Active state color */
+    color: #202020;
+}
+
+
+/* You can add CSS for the border colors based on rarity */
+.border-bronze {
+  border-color: #cd7f32; /* example color */
   
-  .scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #b6b6b6 transparent; /* Colore della barra di scorrimento e colore dello sfondo della barra di scorrimento */
-  }
-  
-  .scrollbar::-webkit-scrollbar {
-    width: 12px; /* Larghezza della barra di scorrimento */
-  }
-  
-  .scrollbar::-webkit-scrollbar-track {
-    background: transparent; /* Colore dello sfondo della traccia della barra di scorrimento */
-  }
-  
-  .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #b6b6b6; /* Colore della barra di scorrimento */
-    border-radius: 6px; /* Raggio dell'angolo arrotondato della barra di scorrimento */
-    border: 3px solid transparent; /* Creazione di uno spazio trasparente intorno alla barra di scorrimento */
-    background-clip: content-box; /* Assicura che lo spazio trasparente non mostri lo sfondo della barra di scorrimento */
-  }
-  
-  
-  
-  .active {
-      background-color: rgba(255, 255, 255, 0.8); /* Active state color */
-      color: #202020;
-  }
-  
+}
+.border-silver {
+  border-color: #c0c0c0;
+}
+.border-gold {
+  border-color: linear-gradient(
+    30deg,
+    #462523 0,
+    #cb9b51 22%, 
+    #f6e27a 45%,
+    #f6f2c0 50%,
+    #f6e27a 55%,
+    #cb9b51 78%,
+    #462523 100%
+    );;
+}
+.border-mythic {
+  border-color: #e5e4e2;
+}
+
+.text-bronze {
+  color: #cd7f32;
+}
+.text-silver {
+  color: #c0c0c0;
+}
+.text-gold {
+  color: #ffd700;
+}
+.text-mythic {
+  color: #e5e4e2;
+}
+
+.prompt-card{
+  /* take the background image from assets */
+  background-image: url("assets/card_background_theme.png");
+  padding: 10px;
+  margin: 10px;
+}

@@ -8,18 +8,40 @@
     import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
     
     
-    let pack = {
-            id: 1,
-            img_path: Pack1032,
-            n: 1032,
-            isListed: false,
-            price: 0.1,
-            owner: '0x1234567890123456789012345678901234567890',
-            owner_name: 'Francesco',
-            collection: 1
+    import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+
+    let packId;
+
+
+    let pack = {};
+
+    $: if (packId) {
+        fetchPackByID(packId);
+    }
+
+    async function fetchPackByID(packId) {
+        try {
+            const packResponse = await fetch('http://localhost:3000/packet/'+packId);
+            if (!packResponse.ok) {
+                throw new Error('Network response was not ok');
+            }
+            pack = await packResponse.json();
+            pack.n = packId.slice(-4);
+
+        } catch (err) {
+            error = err;
         }
-    
-    
+    }
+
+
+
+    onMount(async () => {
+            packId = $page.params.id; // Get the dynamic parameter from the URL
+            fetchPackByID(packId); // Fetch the card data based on the ID
+        });
+
+        
     
 </script>
     
@@ -43,7 +65,7 @@
 
                     <HistoryPrice />
 
-                    <Activity />
+                    <Activity itemID={pack.id} itemType={"packet"}/>
                 </div>
             
             </div>

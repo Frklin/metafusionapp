@@ -198,8 +198,8 @@
                 throw new Error('Network response was not ok');
             }
             prompts = await promptResponse.json();
+
             for (let i = 0; i < prompts.length; i++) {
-                prompts[i].img_path = image9843;
                 prompts[i].n = i;
             }
         } catch (err) {
@@ -209,11 +209,12 @@
 
     async function fetchPacks() {
         try {
-            const packResponse = await fetch('http://localhost:3000/packs');
+            const packResponse = await fetch('http://localhost:3000/packets');
             if (!packResponse.ok) {
                 throw new Error('Network response was not ok');
             }
             packs = await packResponse.json();
+            console.log(packs[0]);
             for (let i = 0; i < packs.length; i++) {
                 packs[i].img_path = pack1234;
                 packs[i].n = i;

@@ -159,11 +159,19 @@ function setPublicKey(account: string) {
 }
 
 
+// export function rarityConverter(rarity: number) {
+//   console.log(rarity)
+//   if (rarity < 0.01) return "mythic";
+//   if (rarity < 0.05) return "gold";
+//   if (rarity < 0.1) return "silver";
+//   if (rarity < 0.2) return "bronze";
+//   return "common";
+// }
 export function rarityConverter(rarity: number) {
-  if (rarity < 0.01) return "mythic";
-  if (rarity < 0.05) return "gold";
-  if (rarity < 0.1) return "silver";
-  if (rarity < 0.2) return "bronze";
+  if (rarity == 0) return "mythic";
+  if (rarity == 1) return "gold";
+  // if (rarity == 2) return "silver";
+  if (rarity == 3) return "bronze";
   return "common";
 }
 

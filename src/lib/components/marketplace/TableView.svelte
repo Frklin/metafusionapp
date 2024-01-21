@@ -1,7 +1,7 @@
 <script lang="ts">
 // @ts-nocheck
     import { NFTtypetoString, weiToETH } from '$lib/index.js';
-
+    import PromptCard from '../PromptCard.svelte';
     export let items: any;
     export let itemType: number;
     export let filterTabOpen: boolean;
@@ -16,8 +16,11 @@
     <a href={'/'+fromWhere+'/'+NFTtypetoString(itemType)+'/'+item.id}>
         <div class="flex flex-col rounded-md bg-card_background shadow group">
             <div class="relative overflow-hidden rounded-t-md">
-                <img src={item.img_path} alt={`item ${item.n}`} class="w-full object-cover group-hover:scale-105 transition-transform duration-300" />
-            </div>
+                {#if item.nft_type == 2}
+                <img src={item.img_path} alt={`item ${item.n}`} class="w-full h-full object-cover rounded-t group-hover:scale-105 transition-transform duration-300" />
+                {:else}
+                <PromptCard item={item} />
+                {/if}            </div>
             <div class="flex flex-col items-start gap-1 p-3">
                 <span class="text-lg font-bold text-primary">Meta{itemType == 2 ? 'Fusion' : itemType == 1 ? 'Prompt' : 'Packs'} #{item.id.slice(0,4)}</span>
                 <p class="text-secondary text-sm">{weiToETH(item.price)} ETH</p>

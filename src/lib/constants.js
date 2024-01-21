@@ -16,10 +16,11 @@ export const views =  ['list', 'grid', 'table'];
 export const RARITIES = ["common", "bronze", "silver", "gold", "mythic"];
 
 export const RARITY_COLORS = {
-    bronze: 'border-bronze text-bronze',
-    silver: 'border-silver text-silver',
-    gold: 'border-gold text-gold',
-    mythic: 'border-mythic text-mythic',
+    'common': 'border-none text-white/60',
+    'bronze': 'bg-bronzeBorder',
+    'silver': 'bg-silverBorder',
+    'gold': 'bg-goldBorder',
+    'mythic': 'bg-mythicBorder',
   };
   
 export const CATEGORY_ICONS = {

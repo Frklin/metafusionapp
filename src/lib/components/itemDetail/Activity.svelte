@@ -4,17 +4,7 @@
 
     export let itemID: number;
     export let itemType: String;
-// let item_activity = [
-//         {id: 14, event: "Sale", price: 0.5, from: "Andrea", to: "Francesco", date: "2w ago"},
-//         {id: 13, event: "Sale", price: 0.5, from: "Claudio", to: "Andrea", date: "1y ago"},
-//         {id: 15, event: "Sale", price: 0.5, from: "Andrea", to: "Claudio", date: "1y ago"},
-//         {id: 16, event: "Sale", price: 0.5, from: "Claudio", to: "Andrea", date: "1y ago"},
-//         {id: 17, event: "Sale", price: 0.5, from: "Andrea", to: "Claudio", date: "1y ago"},
-//         {id: 18, event: "Sale", price: 0.5, from: "Claudio", to: "Andrea", date: "1y ago"},
-//         {id: 19, event: "Sale", price: 0.5, from: "Andrea", to: "Claudio", date: "1y ago"},
-//         {id: 20, event: "Sale", price: 0.5, from: "Claudio", to: "Andrea", date: "1y ago"},
-//         {id: 12, event: "Mint", price: 0.5, from: "Null", to: "Claudio", date: "2y ago"},
-//     ]
+
     let item_activity: any;
     async function get_item_activity() {
         try{
