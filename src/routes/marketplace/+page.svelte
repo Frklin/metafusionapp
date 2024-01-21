@@ -22,6 +22,7 @@
     import GridView from '$lib/components/marketplace/GridView.svelte';
     import TableView from '$lib/components/marketplace/TableView.svelte';
 	import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
+    import FilterTab from '$lib/components/filters/FilterTab.svelte';
 
     let selectedNFTType = 'Cards';
 
@@ -29,7 +30,11 @@
     let searchQuery = '';
     let selectedSort = sortOptions[2];
     let selectedView = 'table';
-
+    let minPrice = 0;
+    let maxPrice = 1000000;
+    let selectedCategories = new Set()
+    let selectedPromptCounts = new Set()
+    let selectedRarities = new Set()
     let packs = [
         {id: 0, n: 1032, NFTtype: 0, price: 0.1, img_path: image1032},
         {id: 1, n: 2154, NFTtype: 0, price: 0.2, img_path: image9999},
@@ -191,9 +196,13 @@
         <TypeSelector bind:selectedNFTType/>
 
         <!-- INFOS -->
-        <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort bind:viewtype={selectedView} originPage={"marketplace"}/>
+        <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort bind:viewtype={selectedView} fromWhere={"marketplace"}/>
         <!-- MAIN -->
         <div class="flex w-full scrollbar">
+            {#if filterTabOpen}
+                <FilterTab bind:filteredItems={filteredItems} fromWhere={"marketplace"} bind:minPrice bind:maxPrice bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
+            {/if}
+
             <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
                 {#if selectedView === 'list'}
                     <ListView items={filteredItems} itemType={NFTTypes[selectedNFTType]} fromWhere={"marketplace"}/>

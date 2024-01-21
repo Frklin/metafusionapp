@@ -11,7 +11,9 @@ export let sortOptions = [
     { name: "Most Rare", sortFunction: (a, b) => b.id - a.id },
 ];
 
-export let views =  ['list', 'grid', 'table'];
+export const views =  ['list', 'grid', 'table'];
+
+export const RARITIES = ["common", "bronze", "silver", "gold", "mythic"];
 
 
 // function calculateRarity(a: any) {

@@ -157,3 +157,12 @@ export function NFTtypetoString(type: number) {
 function setPublicKey(account: string) {
   user_pk = account;
 }
+
+
+export function rarityConverter(rarity: number) {
+  if (rarity < 0.01) return "mythic";
+  if (rarity < 0.05) return "gold";
+  if (rarity < 0.1) return "silver";
+  if (rarity < 0.2) return "bronze";
+  return "common";
+}

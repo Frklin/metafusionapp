@@ -1,7 +1,10 @@
 <script lang="ts">
 
     export let itemListed: boolean;
+    export let itemID: number;
+    export let itemPrice: number;
 
+    import { destroyImage, listImage, unlistImage } from '$lib/metafusion_interactions';
 
 
     function listUnlistItem() {
@@ -15,15 +18,22 @@
     function listItem() {
         itemListed = true;
         console.log('listing item');
+        listImage(itemID, itemPrice.toString());
     }
 
     function unlistItem() {
         itemListed = false;
         console.log('unlisting item');
+        unlistImage(itemID);
     }
 
-    function disctructCard() {
+    function destroyCard() {
         console.log('destructing card');
+        _destroyImage();
+    }
+
+    function _destroyImage() {
+        destroyImage(itemID);
     }
 
 
@@ -32,8 +42,13 @@
 
 
 <div class="flex flex-row justify-center items-center w-full h-full rounded-xl gap-4 p-4">
-    <button on:click={()=>disctructCard()} class="flex flex-row justify-center items-center w-full h-full hover:bg-orange-500 duration-200 bg-orange-400 rounded-xl">
+    <button disabled={itemListed} on:click={()=>destroyCard()} class="flex flex-row justify-center items-center w-full h-full {itemListed ? 'bg-white/20' : ' hover:bg-orange-500  bg-orange-400'} duration-200 rounded-xl">
+        <div class="flex flex-col">
         <h4 class="text-base font-semibold text-primary">Revert Prompts</h4>
+        {#if itemListed}
+            <span class="text-xs font-normal text-primary"> (unlist first)</span>
+        {/if}
+        </div>
     </button>
 
     <button on:click={()=>listUnlistItem()} 

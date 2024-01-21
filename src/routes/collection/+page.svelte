@@ -66,7 +66,7 @@
         <div class="flex flex-col w-full items-center pt-10">
 
             <!-- INFOS -->
-            <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort originPage={"collection"}/>
+            <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>
         
             <div class="flex w-full scrollbar">
                 <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">

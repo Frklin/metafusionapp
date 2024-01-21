@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { buyPacket, buyPrompt, buyImage, listPacket, listPrompt, listImage, unlistPacket, unlistPrompt, unlistImage, openPacket, destroyImage } from '$lib/metafusion_interactions';
+       //@ts-nocheck
+    import { buyPacket, buyPrompt, buyImage } from '$lib/metafusion_interactions';
     import {user_pk} from '$lib/index.js';
 	
     import MyCardButtons from './buttons/MyCardButtons.svelte';
@@ -29,34 +30,6 @@
         
     }
 
-    function listItem() {
-        if (itemType == 0) {
-            listPacket(itemID, itemPrice.toString());
-        } else if (itemType == 1) {
-            listPrompt(itemID, itemPrice.toString());
-        } else {
-            listImage(itemID, itemPrice.toString());
-        }
-    }
-
-    function unlistItem() {
-        if (itemType == 0) {
-            unlistPacket(itemID);
-        } else if (itemType == 1) {
-            unlistPrompt(itemID);
-        } else {
-            unlistImage(itemID);
-        }
-    }
-
-    function _openPacket() {
-        openPacket(itemID);
-    }
-
-    function _destroyImage() {
-        destroyImage(itemID);
-    }
-
     $: isMine = itemOwner.toLowerCase() === user_pk;
 
     </script>
@@ -74,11 +47,11 @@
     <!-- Button -->
     {#if isMine}
         {#if itemType == 0}
-            <MyPackButtons bind:itemListed />
+            <MyPackButtons bind:itemListed itemID={itemID} itemPrice={itemPrice}/>
         {:else if itemType == 1}
-            <MyPromptButtons bind:itemListed />
+            <MyPromptButtons bind:itemListed itemID={itemID} itemPrice={itemPrice}/>
         {:else}
-            <MyCardButtons bind:itemListed />
+            <MyCardButtons bind:itemListed itemID={itemID} itemPrice={itemPrice}/>
         {/if}
     {:else}
     <div class="flex flex-col justify-center items-center w-full h-full  rounded-b-xl">

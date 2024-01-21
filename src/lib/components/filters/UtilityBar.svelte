@@ -7,7 +7,7 @@
     export let searchQuery: string;
     export let selectedSort: any;
     export let viewtype: string = 'grid';
-    export let originPage: string;
+    export let fromWhere: string;
 
     import FilterButton from '$lib/assets/icons/filter.svg';
 	import SearchBar from './SearchBar.svelte';
@@ -22,7 +22,7 @@
     function filterItems(query:string) {
         if (!query) return items;
 
-        if (originPage === 'collection') {
+        if (fromWhere === 'collection') {
             let filtered = [];
             for(let i=0; i<items.length; i++) {
                 if (items[i].NFTtype==0) {
@@ -91,7 +91,7 @@
         <SortTab bind:filteredItems={filteredItems} bind:selectedSort />
     </div>
 
-    {#if (originPage !== 'collection')}
+    {#if (fromWhere !== 'collection')}
         <!-- VIEWS -->
         <ViewType bind:selectedView={viewtype} />
     {/if}
