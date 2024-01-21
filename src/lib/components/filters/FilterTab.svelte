@@ -95,17 +95,19 @@
 
 <div class="flex sticky top-[112px] flex-col w-[340px] h-dvh transition divide-y-2 divide-white/20 px-4 overflow-auto scrollbar">
 
+    {#if fromWhere==='marketplace'}
     <PriceSelector bind:minPrice={minPrice} bind:maxPrice={maxPrice} />
+    {/if}
 
-    {#if fromWhere==='marketplace' && filteredItems[0].NFTtype != 0}
+    {#if (fromWhere==='marketplace' && filteredItems[0].NFTtype != 0) || (fromWhere==='collection')}
     <CategorySelector bind:selectedCategories={selectedCategories} />
     {/if}
 
-    {#if fromWhere==='marketplace' && filteredItems[0].NFTtype == 2}
+    {#if (fromWhere==='marketplace' && filteredItems[0].NFTtype == 2) || (fromWhere==='collection')}
     <PromptSelector bind:selectedPromptCounts={selectedPromptCounts} />
     {/if}
 
-    {#if fromWhere==='marketplace' && filteredItems[0].NFTtype != 0}
+    {#if (fromWhere==='marketplace' && filteredItems[0].NFTtype != 0) || (fromWhere==='collection')}
     <RaritySelector bind:selectedRarities={selectedRarities} />
     {/if}
 
