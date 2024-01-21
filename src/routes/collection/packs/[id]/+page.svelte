@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-    import Prompt1032 from '$lib/assets/Prompts/1234.png';
+    import Pack1032 from '$lib/assets/Packs/5.png';
     import Activity from '$lib/components/itemDetail/Activity.svelte';
     import HistoryPrice from '$lib/components/itemDetail/HistoryPrice.svelte';
     import ItemInfo from '$lib/components/itemDetail/ItemInfo.svelte';
@@ -9,13 +9,13 @@
     import PromptList from '$lib/components/itemDetail/PromptList.svelte';
     
     
-    let prompt = {
+    let pack = {
             id: 1,
-            img_path: Prompt1032,
+            img_path: Pack1032,
             n: 1032,
-            price: 1.0,
+            price: 0.1,
             isListed: false,
-            owner: '0x1234567890123456789012345678901234567890',
+            owner: '0x6fd304ECb50e48e4358E20027e73298EB72915Df',
             owner_name: 'Francesco',
             collection: 1
         }
@@ -34,13 +34,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-7 gap-6 px-10 pt-10">
                     <!-- IMAGE -->
                     <div class="lg:col-span-3"> 
-                        <img src="{prompt.img_path}" alt={`prompt ${prompt.n}`} class="w-full object-cover rounded-md" />
+                        <img src="{pack.img_path}" alt={`pack ${pack.n}`} class="w-full object-cover rounded-md" />
                     </div>
                     <!-- RIGHT PART -->
                     <div class="lg:col-span-4 flex flex-col gap-6">
-                        <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner_name} itemEdition={prompt.edition}/>
+                        <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner_name} itemEdition={pack.collection}/>
     
-                        <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={1} itemOwner={prompt.owner} itemListed={prompt.isListed}/>
+                        <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} itemOwner={pack.owner} itemListed={pack.isListed}/>
     
                         <HistoryPrice />
     

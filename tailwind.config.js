@@ -13,7 +13,6 @@ export default {
         dark: '#333333',
         light: '#FFFFFF',
         background: '#121212',
-        // background: '#FFFFFF',
         card_background: '#202020',
         button : '#3479E4', 
         cover_fade: '#121212 10%',

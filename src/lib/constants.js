@@ -3,3 +3,17 @@
 export const CATEGORIES = ['character', 'colors', 'glasses', 'hats', 'style', 'handoff'];
 
 export const NFTTypes = {'Packs':0, 'Prompts':1, 'Cards':2};
+
+export let sortOptions = [
+    { name: "Price Low to High", sortFunction: (a, b) => a.price - b.price },
+    { name: "Price High to Low", sortFunction: (a, b) => b.price - a.price },
+    { name: "Latest First", sortFunction: (a, b) => b.id - a.id }, // Assuming id is higher for newer items
+    { name: "Most Rare", sortFunction: (a, b) => b.id - a.id },
+];
+
+export let views =  ['list', 'grid', 'table'];
+
+
+// function calculateRarity(a: any) {
+//     return a.prompts.reduce((total, prompt) => total + prompt.rarity, 0);
+// }

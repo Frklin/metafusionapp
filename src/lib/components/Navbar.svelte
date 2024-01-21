@@ -4,10 +4,12 @@
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import { MetaMaskStore } from '$lib';
+  import { addressFormatter } from '$lib';
+
 
   
-  import WalletIcon from '$lib/assets/Icons/wallet.svg';
-  import ProfileIcon from '$lib/assets/Icons/profile.svg';
+  import WalletIcon from '$lib/assets/icons/wallet.svg';
+  import ProfileIcon from '$lib/assets/icons/profile.svg';
   import Logo from '$lib/assets/logo.png';
   
   let isSticked = writable(false);
@@ -65,7 +67,7 @@
                           <img src={WalletIcon} class="h-6 w-6" alt="wallet" />
                           <span class="hidden lg:inline-block">{$balance} ETH</span>
                       </div>
-                      <span class="hidden px-2 lg:inline-block">{walletID.substring(0,4)}...{walletID.substring(walletID.length - 2)}</span>
+                      <span class="hidden px-2 lg:inline-block">{addressFormatter(walletID)}</span>
                   </button>
               {:else}
                   <button on:click={connect} class="text-primary flex h-full items-center rounded-xl bg-white/10 backdrop-blur-lg px-4 py-3 font-semibold hover:bg-white/20 gap-x-2">

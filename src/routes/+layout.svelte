@@ -10,7 +10,7 @@
 
 
 
-<div class="w-full min-h-screen bg-white/20">
+<div class="w-full min-h-screen">
     <Navbar />
     
     <slot />

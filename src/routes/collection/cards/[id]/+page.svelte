@@ -17,7 +17,7 @@ let card = {
         img_path: image1032,
         n: 1032,
         price: 1.0,
-        owner: '0x1234567890123456789012345678901234567890',
+        owner: '0x6fd304ECb50e48e4358E20027e73298EB72915Df',
         owner_name: 'Francesco',
         isListed: true,
         prompts:

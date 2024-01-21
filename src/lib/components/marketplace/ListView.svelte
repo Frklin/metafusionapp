@@ -1,9 +1,10 @@
 <script lang="ts">
-// @ts-nocheck
-
+// @ts-nocheck  
+    import { NFTtypetoString } from '$lib/index.js';
     export let items: any;
     export let itemType: number;
-    
+    export let fromWhere: string;
+
 </script>
 
 
@@ -18,7 +19,7 @@
       </div>
     <div class="flex w-full flex-col divide-y divide-white/10 px-2">
     {#each items as item (item.id)}
-        <a href={'/marketplace/cards/'+item.n}>
+        <a href={'/'+fromWhere+'/'+NFTtypetoString(itemType)+'/'+item.n}>
             <div class="flex items-center p-4 hover:bg-white/20 duration-100">
             <img src={item.img_path} alt={`item ${item.n}`} class="w-12 h-12 rounded-full object-cover mr-4" />
             <div class="flex flex-grow items-center justify-between">

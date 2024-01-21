@@ -15,7 +15,7 @@
             n: 1032,
             price: 1.0,
             isListed: false,
-            owner: '0x1234567890123456789012345678901234567890',
+            owner: '0x6fd304ECb50e48e4358E20027e73298EB72915Df',
             owner_name: 'Francesco',
             collection: 1
         }
@@ -38,7 +38,7 @@
                     </div>
                     <!-- RIGHT PART -->
                     <div class="lg:col-span-4 flex flex-col gap-6">
-                        <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner_name} itemEdition={prompt.edition}/>
+                        <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner_name} itemEdition={prompt.collection}/>
     
                         <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={1} itemOwner={prompt.owner} itemListed={prompt.isListed}/>
     

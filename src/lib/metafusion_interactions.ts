@@ -924,7 +924,6 @@ export var signer: any = null;
 export var contract: any = null;
 
 
-
 ///////////// FUNCTIONS ///////////////
 
 async function setSigner() {
@@ -932,15 +931,12 @@ async function setSigner() {
     let sig = await prov.getSigner()
     provider = prov;
     signer = sig
-    // console.log("signer has changed." + await signer.getAddress())
 }
 
 async function setContract() {
     await setSigner()
-    console.log(signer)
     contract = new ethers.Contract(contract_address, abi, signer)
     contract = contract.connect(signer)
-    console.log("contract has changed.")
 }
 
   
@@ -955,13 +951,19 @@ async function forgePacket(collection: number, fees = PACKET_COST) {
     await tx.wait();
     return tx;
 }
-  
+
 async function listPacket(packetId: number, price: string) {
-    let tx = await contract.listPacket(packetId, ethers.parseEther(price));
-    await tx.wait();
-    return tx;
+  let tx = await contract.listPacket(packetId, ethers.parseEther(price));
+  await tx.wait();
+  return tx;
 }
-  
+
+async function unlistPacket(packetId: number) {
+  let tx = await contract.unlistPrompt(packetId);
+  await tx.wait();
+  return tx;
+}  
+
 async function buyPacket(packetId: number, price: string, txFees = TRANSACTION_FEES) {
     let val = ethers.parseEther(price) + ethers.parseEther(txFees);
     let tx = await contract.buyPacket(packetId, {value: val});
@@ -984,6 +986,12 @@ async function listPrompt(promptId: number, price: string) {
     await tx.wait();
     return tx;
 }
+
+async function unlistPrompt(promptId: number) {
+  let tx = await contract.unlistPrompt(promptId);
+  await tx.wait();
+  return tx;
+}
   
 async function buyPrompt(promptId: number, price: string, txFees = TRANSACTION_FEES) {
     let val = ethers.parseEther(price) + ethers.parseEther(txFees);
@@ -1004,6 +1012,12 @@ async function createImage(promptIds: number[], fees = GENERATION_FEES) {
   
 async function listImage(imageId: number, price: string) {
     let tx = await contract.listCard(imageId, ethers.parseEther(price));
+    await tx.wait();
+    return tx;
+}
+
+async function unlistImage(imageId: number) {
+    let tx = await contract.unlistCard(imageId);
     await tx.wait();
     return tx;
 }
@@ -1038,14 +1052,17 @@ export {
     forgeCollection,
     forgePacket,
     listPacket,
+    unlistPacket,
     buyPacket,
     getOwnerOfPacket,
     openPacket,
     listPrompt,
+    unlistPrompt,
     buyPrompt,
     getOwnerOfPrompt,
     createImage,
     listImage,
+    unlistImage,
     buyImage,
     getOwnerOfImage,
     destroyImage,

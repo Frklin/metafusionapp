@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import { setSigner, setContract} from "./metafusion_interactions";
 
+export let user_pk = "";
+
 const getMetaMaskPresent = () =>
   typeof window !== "undefined" && typeof window.ethereum !== "undefined";
 
@@ -28,6 +30,7 @@ export function MetaMaskStore() {
     ) {
       const account = newAccounts[0];
       walletState.set({ account });
+      setPublicKey(account);
       updateBalance(newAccounts[0]);
       // setSigner();
       setContract();
@@ -58,6 +61,7 @@ export function MetaMaskStore() {
       if (accountResponse && accountResponse.length && accountResponse[0]) {
         const account = accountResponse[0];
         walletState.set({ account });
+        setPublicKey(account);
         updateBalance(account);
         setSigner();
         setContract();
@@ -94,6 +98,8 @@ export function MetaMaskStore() {
     if (accountResponse && accountResponse.length && accountResponse[0]) {
       const account = accountResponse[0];
       walletState.set({ account });
+      updateBalance(account);
+      setPublicKey(account);
       // watch for account changes from the extension
       window.ethereum?.on("accountsChanged", handleAccountsChanged);
     }
@@ -132,6 +138,22 @@ function balanceFormatter(balance: string) {
   return parseFloat(balance).toFixed(2).toString();
 }
 
-function addressFormatter(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+export function addressFormatter(address: string) {
+  return `${address.slice(0, 4)}...${address.slice(-2)}`;
+}
+
+export function NFTtypetoString(type: number) {
+  switch (type) {
+    case 0:
+      return "packs";
+    case 1:
+      return "prompts";
+    default:
+      return "cards";
+  }
+}
+
+
+function setPublicKey(account: string) {
+  user_pk = account;
 }
