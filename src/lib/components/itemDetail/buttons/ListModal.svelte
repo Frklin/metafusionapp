@@ -29,9 +29,9 @@
     function convertPrice(currency: string, amount: number) {
         console.log(currency, amount);
         if (currency === 'ETH') {
-            return amount * 2750;
+            return (amount * 2750).toFixed(2);
         } else {
-            return (amount / 2750).toFixed(2);
+            return (amount / 2750);
         }
     }
 
@@ -45,11 +45,11 @@
 
     function listItem() {
         let itemPrice = priceInWei();
-        if (item.type === 'packet') {
+        if (item.nft_type === 'packet') {
             listPacket(item.id, itemPrice);
-        } else if (item.type === 'prompt') {
+        } else if (item.nft_type === 'prompt') {
             listPrompt(item.id, itemPrice);
-        } else if (item.type === 'image') {
+        } else if (item.nft_type === 'image') {
             listImage(item.id, itemPrice);
         }
     }
