@@ -22,13 +22,10 @@
 
     function listItem() {
         itemListed = true;
-        console.log('listing item');
-        // listPacket(itemID, itemPrice.toString());
     }
 
     function unlistItem() {
         itemListed = false;
-        console.log('unlisting item');
         unlistPacket(itemID);
     }
 

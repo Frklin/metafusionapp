@@ -16,21 +16,19 @@
         if (itemListed) {
             unlistItem();
         } else {
-            listItem();
+            openModal();
         }        
     }
 
-    function listItem() {
+    function openModal() {
         isModalOpen = true;
-        itemListed = true;
-        console.log('listing item');
-        // listImage(itemID, itemPrice.toString());
     }
 
     function unlistItem() {
-        itemListed = false;
-        console.log('unlisting item');
-        unlistImage(itemID);
+        unlistImage(itemID).then((res) => {
+                location.reload();
+                itemListed = false;
+            });
     }
 
     function destroyCard() {
@@ -39,7 +37,9 @@
     }
 
     function _destroyImage() {
-        destroyImage(itemID);
+        destroyImage(itemID).then((res) => {
+                location.replace('/collection')
+            });
     }
 
 
@@ -66,5 +66,5 @@
 
 
 <div>
-    <Modal item={itemID} open={isModalOpen} on:close={handleClose}/>
+    <Modal item={itemID} itemType={'image'} open={isModalOpen} itemListed={itemListed} on:close={handleClose}/>
 </div>

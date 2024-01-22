@@ -7,6 +7,8 @@
     const dispatch = createEventDispatcher();
     export let open: boolean=true;
     export let item: any;
+    export let itemType: string;
+    export let itemListed: boolean;
 
     let showPriceDropdown = false;
     let selectedCurrency = 'ETH';
@@ -26,35 +28,37 @@
         showPriceDropdown = false;
     }
 
-    function convertPrice(currency: string, amount: number) {
-        console.log(currency, amount);
+    function convertPrice(currency: string, amount: string) {
         if (currency === 'ETH') {
-            return (amount * 2750).toFixed(2);
+            return (parseInt(amount) * 2750).toFixed(2);
         } else {
-            return (amount / 2750);
+            return (parseInt(amount) / 2750);
         }
     }
 
-    function priceInWei() {
-        if (selectedCurrency === 'ETH') {
-            return (parseInt(price) * 10**18).toString();
-        } else {
-            return (parseInt(price) * 10**6).toString();
-        }
-    }
 
     function listItem() {
-        let itemPrice = priceInWei();
-        if (item.nft_type === 'packet') {
-            listPacket(item.id, itemPrice);
-        } else if (item.nft_type === 'prompt') {
-            listPrompt(item.id, itemPrice);
-        } else if (item.nft_type === 'image') {
-            listImage(item.id, itemPrice);
+        if (itemType === 'packet') {
+            listPacket(item, price.toString()).then((res) => {
+                location.reload();
+                itemListed = true;
+            });
+        } else if (itemType === 'prompt') {
+            listPrompt(item, price.toString()).then((res) => {
+                location.reload();
+                itemListed = true;
+            });
+        } else if (itemType === 'image') {
+            listImage(item, price.toString()).then((res) => {
+                location.reload();
+                itemListed = true;
+            });
         }
+        close();
     }
 
     $: convertedPrice = convertPrice(selectedCurrency, price);
+    $: disableButton = price === '' || price === '0' || price === '0.00';
 </script>
   
 
@@ -65,7 +69,10 @@
 
 
 {#if open}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="fixed inset-0 bg-background bg-opacity-80 z-50 flex justify-center items-center" on:click={close}>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="bg-card_background rounded-lg shadow-xl p-8 relative" on:click|stopPropagation>
             <h1 class="text-xl text-white font-semibold mb-6">List Item #{item.slice(-4)} for Sale</h1>
             
@@ -128,7 +135,7 @@
 
                 <div class="flex flex-row w-full gap-4 justify-between mt-6">
                     <button class="w-1/2 h-10 bg-white/10 rounded-lg hover:bg-white/20 duration-200 text-white/80 font-semibold" on:click={close}>Cancel</button>
-                    <button on:click={listItem()} class="w-1/2 h-10 bg-button hover:bg-button/90 rounded-lg text-white font-semibold">List</button>
+                    <button disabled={disableButton} on:click={listItem} class="{disableButton ? 'bg-white/20' : 'bg-button hover:bg-button/90'} w-1/2 h-10 rounded-lg text-white font-semibold">List</button>
                 </div>  
             </div>
         </div>

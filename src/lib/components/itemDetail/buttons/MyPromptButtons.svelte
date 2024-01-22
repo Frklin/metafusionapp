@@ -17,21 +17,19 @@
         if (itemListed) {
             unlistItem();
         } else {
-            listItem();
+            openModal();
         }        
     }
 
-    function listItem() {
+    function openModal() {
         isModalOpen = true;
-        itemListed = true;
-        console.log('listing item');
-        // listPrompt(itemID, itemPrice.toString());
     }
 
     function unlistItem() {
-        itemListed = false;
-        console.log('unlisting item');
-        unlistPrompt(itemID);
+        unlistPrompt(itemID).then((res) => {
+                location.reload();
+                itemListed = false;
+            });
     }
 
 
@@ -50,5 +48,5 @@
 
 
 <div>
-    <Modal item={itemID} open={isModalOpen} on:close={handleClose}/>
+    <Modal item={itemID} itemType={'prompt'} open={isModalOpen} itemListed={itemListed} on:close={handleClose}/>
 </div>

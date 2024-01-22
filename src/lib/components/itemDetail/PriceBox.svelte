@@ -40,12 +40,11 @@
     <div class="flex flex-col gap-2 p-4">
         <h4 class="text-xs font-normal text-secondary">Current Price</h4>
         <div class="flex flex-row gap-2 items-baseline">
-            <h1 class="text-3xl font-semibold text-white">{weiToETH(itemPrice)} ETH</h1>
-            <h4 class="text-sm font-normal text-secondary">$ {convertToUSDT()}</h4>
+            <h1 class="text-3xl font-semibold text-white">{itemListed ? weiToETH(itemPrice)+' ETH' : 'Not Listed'} </h1>
+            <h4 class="text-sm font-normal text-secondary"> {itemListed ? '$' + convertToUSDT() : ''}</h4>
         </div>
     </div>
 
-    <!-- Button -->
     {#if isMine}
         {#if itemType == 0}
             <MyPackButtons bind:itemListed itemID={itemID} itemPrice={itemPrice}/>

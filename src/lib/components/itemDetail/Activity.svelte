@@ -35,7 +35,7 @@ onMount(async () => {
             <span>Date</span>
         </div>
         <div class="flex flex-col h-[180px] overflow-auto divide-y scrollbar px-2 divide-white/20" style="">
-            {#each item_activity as activity (activity.id)}
+            {#each item_activity as activity}
             <div class="grid grid-cols-5 text-start items-center px-8 py-3 hover:bg-white/20 duration-100">
                 <span class="text-sm font-semibold text-primary">Sell</span>
                 <span class="text-xs text-primary">{weiToETH(activity.price)} ETH</span>
