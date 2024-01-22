@@ -138,8 +138,8 @@ function balanceFormatter(balance: string) {
   return parseFloat(balance).toFixed(2).toString();
 }
 
-export function addressFormatter(address: string) {
-  return `${address.slice(0, 4)}...${address.slice(-2)}`;
+export function addressFormatter(address: string, length: number = 4) {
+  return `${address.slice(0, length)}...${address.slice(-2)}`;
 }
 
 export function NFTtypetoString(type: number) {

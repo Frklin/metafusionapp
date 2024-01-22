@@ -71,7 +71,7 @@
 
 
 
-<div class="flex w-full h-20 px-2 items-center bg-background gap-x-3 sticky top-[64px] z-10 ">
+<div class="flex w-full h-20 px-2 items-center bg-background gap-x-3 sticky top-[64px] " style="z-index: 1000;">
 
     <!-- FILTER BUTTON -->
     <div class="flex justify-center items-center w-12 h-12 rounded-xl bg-card_background p-3 cursor-pointer hover:bg-white/20 duration-200" on:click={toggleFilterTab}>

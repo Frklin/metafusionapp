@@ -6,6 +6,8 @@
     import HistoryPrice from '$lib/components/itemDetail/HistoryPrice.svelte';
     import ItemInfo from '$lib/components/itemDetail/ItemInfo.svelte';
     import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
+	import PromptCardDetail from '$lib/components/PromptCardDetail.svelte';
+
     
     
     import { page } from '$app/stores';
@@ -54,8 +56,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-7 gap-6 px-10 pt-10">
                 <!-- IMAGE -->
                 <div class="lg:col-span-3"> 
-                    <img src="{Prompt1032}" alt={`prompt ${prompt.n}`} class="w-full object-cover rounded-md" />
-                </div>
+                    <!-- <img src="{prompt.img_path}" alt={`prompt ${prompt.n}`} class="w-full object-cover rounded-md" /> -->
+                    <PromptCardDetail item={prompt} />
+                </div> 
+
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
                     <ItemInfo itemType={1} itemNumber={prompt.n} itemOwner={prompt.owner} itemEdition={prompt.collectionId}/>
@@ -64,7 +68,7 @@
 
                     <HistoryPrice />
 
-                    <Activity itemID={prompt.id} itemType={"prompt"} />
+                    <Activity itemID={prompt.id} itemType={"prompt"}/>
                 </div>
             
             </div>

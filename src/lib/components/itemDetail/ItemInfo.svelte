@@ -15,7 +15,9 @@
         <h1 class="text-3xl font-semibold text-primary">Meta{itemType == 0 ? 'Pack' :  itemType == 1 ? 'Prompt' : 'Fusion'} #{itemNumber.slice(0,4)}</h1>
         <div class="flex flex-row gap-1">
             <h4 class="text-sm font-normal text-secondary">Owned by</h4>
-            <h4 class="text-sm font-normal text-button">{addressFormatter(itemOwner)}</h4>
+            <a href="{'/profile/'+itemOwner}">
+                <h4 class="text-sm font-normal text-button cursor-pointer hover:text-blue-400">{addressFormatter(itemOwner)}</h4>
+            </a>
         </div>
     </div>
 </div>

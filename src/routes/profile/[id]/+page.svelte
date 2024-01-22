@@ -11,8 +11,9 @@
     import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
     import { sortOptions } from '$lib/constants.js';
-    import { user_pk } from '$lib';
     import { onMount } from 'svelte';
+    import { page } from '$app/stores';
+
     
     let filterTabOpen = false;
     let searchQuery = '';
@@ -21,22 +22,21 @@
     let selectedPromptCounts = new Set()
     let selectedRarities = new Set()
     let user = {
-            username: '',
+            username: 'Francesco',
             avatar: 'https://avatars.githubusercontent.com/u/59870781?v=4',
             address: '0x123456...7890',
         }
 
-    
-
+    let userId = {};
     let items = [];
-    async function getUserData() {
-        if (user_pk){
+    async function getUserData(userId) {
+        if (userId){
             try {
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const res = await fetch('http://localhost:3000/user/'+userId);
                 const data = await res.json();
                 let cards = data.cards;
-                user.address=user_pk
-                user.username='User'+user_pk.substring(user_pk.length - 4);
+                user.address=userId
+                user.username='User'+userId.substring(userId.length - 4);
                 for(let i=0; i<cards.length; i++){
                     cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
                 }
@@ -50,7 +50,8 @@
     let filteredItems = items;
 
     onMount(async () => {
-        await getUserData();
+        userId = $page.params.id; // Get the dynamic parameter from the URL
+        await getUserData(userId);
     });
 
 </script>

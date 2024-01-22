@@ -1,9 +1,32 @@
 <script lang='ts'>
     import { addressFormatter } from '$lib/index.js';
+    import { clipboard } from '@skeletonlabs/skeleton';
+    import { user_pk } from '$lib';
+    import  Pencil  from '$lib/assets/icons/pencil.svg';
+    import Copy from '$lib/assets/icons/copy.png';
+
 
     export let avatar: string;
     export let username: string;
     export let address: string;
+
+    let tooltipVisible = false;
+    let tooltipText = 'Copy';
+
+    function showTooltip() {
+        tooltipVisible = true;
+        tooltipText = 'Copy';
+    }
+
+    function hideTooltip() {
+        tooltipVisible = false;
+    }
+
+    function copyAddress() {
+        tooltipText = 'Copied!';
+    }
+
+    $: isMine = address === user_pk;
 </script>
 
 
@@ -20,9 +43,41 @@
 
         <!-- PROFILE NAME AND ADDRESS -->
         <div class="flex flex-col justify-center items-start gap-2">
-            <span class="text-4xl font-semibold text-primary">{username}</span>
-            <span class="text-base font-normal text-secondary">{addressFormatter(address)}</span>
-        </div>
+            <div class="flex flex-row gap-3 items-center">
+             <span class="text-4xl font-semibold text-primary">{username}</span>
+             {#if isMine}
+                <img src={Pencil} alt="Pencil" class="w-6 h-6 opacity-50 hover:opacity-100 cursor-pointer" />
+            {/if}
+            </div>
+            <div class="flex flex-row gap-2">
+            <button 
+            on:mouseover={showTooltip}
+            on:mouseleave={hideTooltip}
+            on:click={copyAddress}
+            use:clipboard={address}
+            class="text-base font-normal text-secondary hover:text-white duration-200">{addressFormatter(address,6)}
+            </button>
+            <div 
+            class:invisible={!tooltipVisible}
+            class:opacity-100={tooltipVisible}
+            class="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white {tooltipText === 'Copied!' ? 'bg-gray-400' : 'bg-gray-800'} rounded-lg shadow-sm tooltip"
+            style="transition-duration: 150ms;"
+            role="tooltip">
+            {tooltipText}
+            <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>  
+            <button 
+            on:mouseover={showTooltip}
+            on:mouseleave={hideTooltip}
+            on:click={copyAddress}
+            use:clipboard={address}
+            class="text-base font-normal text-secondary hover:text-white duration-200">
+            <img src="{Copy}" alt="copy" class="w-4 h-4 opacity-50 hover:opacity-100">
+            </button>
         
+        </div>
+        </div>
+
+      
     </div>
 </div>

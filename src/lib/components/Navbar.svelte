@@ -19,11 +19,15 @@
 
 
   onMount(() => {
+
+  });
+  onMount(() => {
     init();
     const handleScroll = () => {
       const offset = window.pageYOffset || document.documentElement.scrollTop;
       isSticked.set(offset > 0); // Set to true as soon as we scroll down
     };
+    
 
     window.addEventListener('scroll', handleScroll);
 
@@ -38,7 +42,7 @@
 </script>
 
 
-<header class:sticked="{$isSticked}" class="fixed top-0 left-0 right-0 z-10">
+<header class:sticked="{$isSticked}" class="fixed top-0 left-0 right-0 transition-background-color duration-300" style="z-index: 1000;">
   <div class="mx-auto max-w-8xl px-4 md:px-6 lg:px-8 2xl:px-14">
     <div class="flex items-center gap-x-2 py-2.5 ">
       <button class="h-full px-1 xl:hidden">
@@ -91,3 +95,11 @@
 
 
 
+<style>
+  .sticked {
+    background-color: #121212;
+  }
+  .transition-background-color {
+    transition: background-color 300ms;
+  }
+</style>

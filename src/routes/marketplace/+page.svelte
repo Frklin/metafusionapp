@@ -73,7 +73,6 @@
                 throw new Error('Network response was not ok');
             }
             packs = await packResponse.json();
-            console.log(packs[0]);
             for (let i = 0; i < packs.length; i++) {
                 packs[i].img_path = Packet;
                 packs[i].n = packs[i].id.slice(-4);

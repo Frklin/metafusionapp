@@ -4,6 +4,7 @@
     import { categoryConverter } from '$lib/index.js';
 	  import PromptCardFull from '../PromptCardFull.svelte';
     import PromptCard from '../PromptCard.svelte';
+	import PromptCardDetail from '../PromptCardDetail.svelte';
 
     export let prompts: any;
 

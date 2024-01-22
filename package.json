@@ -25,6 +25,8 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
 		"ethers": "^6.10.0",
+		"flowbite": "^2.2.1",
+		"flowbite-svelte": "^0.44.22",
 		"postcss": "^8.4.33",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
@@ -42,6 +44,8 @@
 		"@fontsource/poppins": "^5.0.8",
 		"@nomicfoundation/solidity-analyzer": "^0.1.1",
 		"@nomicfoundation/solidity-analyzer-linux-x64-musl": "^0.1.1",
-		"hardhat": "^2.19.4"
+		"@skeletonlabs/skeleton": "^2.7.1",
+		"hardhat": "^2.19.4",
+		"svelte-clipboard": "^1.0.0"
 	}
 }

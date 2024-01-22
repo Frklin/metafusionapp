@@ -37,13 +37,17 @@
 
 
 <div class="flex flex-col w-full border border-white/20 bg-card_background rounded-xl {(isMine&&itemType!=1) ? 'h-[180px]' : 'h-[150px]'}">
+    {#if itemListed}
     <div class="flex flex-col gap-2 p-4">
         <h4 class="text-xs font-normal text-secondary">Current Price</h4>
         <div class="flex flex-row gap-2 items-baseline">
-            <h1 class="text-3xl font-semibold text-white">{itemListed ? weiToETH(itemPrice)+' ETH' : 'Not Listed'} </h1>
+                <h1 class="text-3xl font-semibold text-white">{weiToETH(itemPrice)+' ETH'}</h1>
             <h4 class="text-sm font-normal text-secondary"> {itemListed ? '$' + convertToUSDT() : ''}</h4>
         </div>
     </div>
+    {:else}
+    <div class="pl-3 h-full flex items-center"><h1 class="text-3xl font-semibold text-white">Item Not Listed</h1></div>
+    {/if}
 
     {#if isMine}
         {#if itemType == 0}
@@ -54,10 +58,12 @@
             <MyCardButtons bind:itemListed itemID={itemID} itemPrice={itemPrice}/>
         {/if}
     {:else}
+    {#if itemListed}
     <div class="flex flex-col justify-center items-center w-full h-full  rounded-b-xl">
-        <button on:click={()=>buyItem()} class="flex flex-row justify-center items-center w-full h-full bg-button rounded-b-xl">
-            <h4 class="text-sm font-semibold text-primary">Buy Now</h4>
+        <button on:click={()=>buyItem()} class="flex flex-row justify-center items-center w-full h-full bg-button hover:bg-blue-500 duration-200 rounded-b-xl">
+            <h4 class="text-sm font-semibold  text-primary">Buy Now</h4>
         </button>
     </div>
+    {/if}
     {/if}
 </div>

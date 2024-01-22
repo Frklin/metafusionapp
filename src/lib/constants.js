@@ -24,12 +24,12 @@ export const RARITY_COLORS = {
   };
   
 export const CATEGORY_ICONS = {
-    handoff: '$lib/assets/icons/wallet.svg', 
-    character: '$lib/assets/icons/wallet.svg',
-    colors: '$lib/assets/icons/wallet.svg',
-    glasses: '$lib/assets/icons/wallet.svg',
-    hats: '$lib/assets/icons/wallet.svg',
-    style: '$lib/assets/icons/wallet.svg',
+    handoff: '$lib/assets/categories/colors.svg',
+    'character': '$lib/assets/categories/colors.svg',
+    colors: '$lib/assets/categories/colors.svg',
+    glasses: '$lib/assets/categories/colors.svg',
+    hats: '$lib/assets/categories/colors.svg',
+    style: '$lib/assets/categories/style.svg'
 };
 
 
