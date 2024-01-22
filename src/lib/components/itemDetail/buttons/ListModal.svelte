@@ -21,17 +21,17 @@
         showPriceDropdown = !showPriceDropdown;
     }
 
-    function selectCurrency(currency) {
+    function selectCurrency(currency: string) {
         selectedCurrency = currency;
         showPriceDropdown = false;
     }
 
-    function convertPrice(currency, amount) {
+    function convertPrice(currency: string, amount: number) {
         console.log(currency, amount);
         if (currency === 'ETH') {
             return amount * 2750;
         } else {
-            return amount / 2750;
+            return (amount / 2750).toFixed(2);
         }
     }
 
