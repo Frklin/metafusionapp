@@ -28,8 +28,8 @@ async function fetchCardByID(cardID) {
             throw new Error('Network response was not ok');
         }
         card = await cardResponse.json();
-        card.img_path = 'http://localhost:3000/card/' + cardId + '/image';
-        card.n = cardId.slice(-4);
+        card.img_path = 'http://localhost:3000/card/' + cardID + '/image';
+        card.n = cardID.slice(-4);
     } catch (err) {
         error = err;
     }

@@ -2,6 +2,7 @@
     import { RARITY_COLORS, CATEGORY_ICONS } from '$lib/constants.js';
     import { rarityConverter, categoryConverter } from '$lib/index.js';
     import CardTheme from '$lib/assets/card_background_theme.png';
+    
     export let item: any;
 </script>
 

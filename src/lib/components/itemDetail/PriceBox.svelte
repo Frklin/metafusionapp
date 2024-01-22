@@ -20,12 +20,13 @@
 
 
     function buyItem() {
+        let price = weiToETH(itemPrice);
         if (itemType == 0) {
-            buyPacket(itemID, itemPrice.toString());
+            buyPacket(itemID, price.toString());
         } else if (itemType == 1) {
-            buyPrompt(itemID, itemPrice.toString());
+            buyPrompt(itemID, price.toString());
         } else {
-            buyImage(itemID, itemPrice.toString());
+            buyImage(itemID, price.toString());
         }
         
     }

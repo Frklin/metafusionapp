@@ -1,5 +1,5 @@
 <script>
-
+    // @ts-nocheck
     import image1032 from '$lib/assets/NFTs/1032.avif';
     import image2154 from '$lib/assets/NFTs/2154.avif';
     import image5324 from '$lib/assets/NFTs/5324.avif';
