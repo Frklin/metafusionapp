@@ -9,7 +9,7 @@
 
 
 <div class="flex rounded-md h-72 {RARITY_COLORS[rarityConverter(item.rarity)]}">
-    <img src={CardTheme} class={`p-2 absolute w-full h-full rounded-md`} alt="card theme" />
+    <img src={CardTheme} class={`p-2 absolute w-full h-full rounded-md object-cover`} alt="card theme" />
     
     <!-- CONTENT -->
     <div class="flex flex-col z-20 items-center justify-between w-full py-10">

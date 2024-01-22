@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-    import Pack1032 from '$lib/assets/Packs/5.png';
+    import Packet from '$lib/assets/Packs/packet.jpg'
     import Activity from '$lib/components/itemDetail/Activity.svelte';
     import HistoryPrice from '$lib/components/itemDetail/HistoryPrice.svelte';
     import ItemInfo from '$lib/components/itemDetail/ItemInfo.svelte';
@@ -10,6 +10,7 @@
     
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
+	import PromptCardFull from '$lib/components/PromptCardFull.svelte';
 
     let packId;
 
@@ -27,6 +28,7 @@
                 throw new Error('Network response was not ok');
             }
             pack = await packResponse.json();
+            pack.img_path = Packet
             pack.n = packId.slice(-4);
 
         } catch (err) {
@@ -47,7 +49,7 @@
     
     
     
-
+{#if pack.id && pack}
 <div class="flex w-full flex-col items-start bg-red-400">
     <div class="flex w-full bg-background px-10 pt-10">
         <div class="flex w-full flex-col gap-10 ">
@@ -59,7 +61,7 @@
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
-                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner_name} itemEdition={pack.edition}/>
+                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner} itemEdition={pack.collectionId}/>
 
                     <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} itemOwner={pack.owner} itemListed={pack.isListed}/>
 
@@ -73,7 +75,6 @@
         </div>
     </div>
 </div>
-
-
+{/if}
     
     

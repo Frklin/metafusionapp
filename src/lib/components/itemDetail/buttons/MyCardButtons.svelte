@@ -5,7 +5,12 @@
     export let itemPrice: number;
 
     import { destroyImage, listImage, unlistImage } from '$lib/metafusion_interactions';
+    import Modal from '$lib/components/itemDetail/buttons/ListModal.svelte';
 
+    let isModalOpen = false;
+    const handleClose = () => {
+        isModalOpen = false;
+    }
 
     function listUnlistItem() {
         if (itemListed) {
@@ -16,6 +21,7 @@
     }
 
     function listItem() {
+        isModalOpen = true;
         itemListed = true;
         console.log('listing item');
         listImage(itemID, itemPrice.toString());
@@ -51,8 +57,14 @@
         </div>
     </button>
 
-    <button on:click={()=>listUnlistItem()} 
+    <button  data-modal-target="crud-modal" data-modal-toggle="crud-modal" on:click={()=>listUnlistItem() } 
         class="flex flex-row justify-center items-center w-full h-full border {itemListed ? 'bg-red-500 hover:bg-red-400' : 'hover:bg-blue-500  bg-button'}  duration-200  border-white/20 rounded-xl">
         <h4 class="text-base font-semibold text-primary">{itemListed ? 'Remove Listing' : 'List Item'}</h4>
     </button>
+</div>
+
+
+
+<div>
+    <Modal item={itemID} open={isModalOpen} on:close={handleClose}/>
 </div>

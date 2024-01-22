@@ -15,7 +15,7 @@
         <a href={'/'+fromWhere+'/'+NFTtypetoString(item.nft_type)+'/'+item.id}>
             <div class="relative bg-card_background rounded-md shadow overflow-hidden">
                 <div class="group w-full h-full">
-                {#if item.nft_type == 2}
+                {#if item.nft_type != 1}
                 <img src={item.img_path} alt={`item ${item.n}`} class="w-full h-full object-cover rounded-t group-hover:scale-105 transition-transform duration-300" />
                 {:else}
                 <PromptCard item={item} />

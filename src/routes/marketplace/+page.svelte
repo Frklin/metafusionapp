@@ -8,6 +8,7 @@
 
     import pack1234 from '$lib/assets/Packs/10.png';
 
+    import Packet from '$lib/assets/Packs/packet.jpg'
 	import Cover from '$lib/components/Cover.svelte';
 	import TypeSelector from '$lib/components/marketplace/TypeSelector.svelte';
     import ListView from '$lib/components/marketplace/ListView.svelte';
@@ -42,7 +43,7 @@
             cards = await cardResponse.json();
             for (let i = 0; i < cards.length; i++) {
                 cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
-                cards[i].n = i;
+                cards[i].n =  cards[i].id.slice(-4);
             }
         } catch (err) {
             error = err;
@@ -58,7 +59,7 @@
             prompts = await promptResponse.json();
 
             for (let i = 0; i < prompts.length; i++) {
-                prompts[i].n = i;
+                prompts[i].n = prompts[i].id.slice(-4);
             }
         } catch (err) {
             error = err;
@@ -74,8 +75,8 @@
             packs = await packResponse.json();
             console.log(packs[0]);
             for (let i = 0; i < packs.length; i++) {
-                packs[i].img_path = pack1234;
-                packs[i].n = i;
+                packs[i].img_path = Packet;
+                packs[i].n = packs[i].id.slice(-4);
             }
         } catch (err) {
             error = err;
