@@ -46,7 +46,7 @@
         </div>
     </div>
     {:else}
-    <div class="pl-3 h-full flex items-center"><h1 class="text-3xl font-semibold text-white">Item Not Listed</h1></div>
+    <div class="flex justify-center items-center h-full w-full"><h1 class="text-3xl font-semibold text-secondary">Item Not Listed</h1></div>
     {/if}
 
     {#if isMine}

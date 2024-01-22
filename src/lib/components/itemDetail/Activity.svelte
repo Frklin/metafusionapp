@@ -36,11 +36,11 @@ onMount(async () => {
         </div>
         <div class="flex flex-col h-[180px] overflow-auto divide-y scrollbar px-2 divide-white/20" style="">
             {#each item_activity as activity}
-            <div class="grid grid-cols-5 text-start items-center px-8 py-3 hover:bg-white/20 duration-100">
+            <div class="grid grid-cols-5 text-start items-center px-8 py-3 rounded-xl hover:bg-white/20 duration-100">
                 <span class="text-sm font-semibold text-primary">Sell</span>
                 <span class="text-xs text-primary">{weiToETH(activity.price)} ETH</span>
-                <span class="text-sm text-button">{addressFormatter(activity.seller)}</span>
-                <span class="text-sm text-button">{addressFormatter(activity.buyer)}</span>
+                <a href="{'/profile/'+activity.seller}"> <span class="text-sm text-button hover:text-blue-400">{addressFormatter(activity.seller)}</span></a>
+                <a href="{'/profile/'+activity.buyer}"> <span class="text-sm text-button hover:text-blue-400">{addressFormatter(activity.buyer)}</span></a>
                 <span class="text-sm text-secondary">2h ago</span>
             </div>
             {/each}
