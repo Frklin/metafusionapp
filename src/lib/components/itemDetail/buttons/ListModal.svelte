@@ -35,13 +35,22 @@
         }
     }
 
+    function priceInWei() {
+        if (selectedCurrency === 'ETH') {
+            return (parseInt(price) * 10**18).toString();
+        } else {
+            return (parseInt(price) * 10**6).toString();
+        }
+    }
+
     function listItem() {
+        let itemPrice = priceInWei();
         if (item.type === 'packet') {
-            listPacket(item.id, price);
+            listPacket(item.id, itemPrice);
         } else if (item.type === 'prompt') {
-            listPrompt(item.id, price);
+            listPrompt(item.id, itemPrice);
         } else if (item.type === 'image') {
-            listImage(item.id, price);
+            listImage(item.id, itemPrice);
         }
     }
 

@@ -24,7 +24,7 @@
         isModalOpen = true;
         itemListed = true;
         console.log('listing item');
-        listImage(itemID, itemPrice.toString());
+        // listImage(itemID, itemPrice.toString());
     }
 
     function unlistItem() {

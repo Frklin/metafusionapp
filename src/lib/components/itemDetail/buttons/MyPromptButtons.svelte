@@ -25,7 +25,7 @@
         isModalOpen = true;
         itemListed = true;
         console.log('listing item');
-        listPrompt(itemID, itemPrice.toString());
+        // listPrompt(itemID, itemPrice.toString());
     }
 
     function unlistItem() {
