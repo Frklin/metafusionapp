@@ -23,11 +23,11 @@
     let selectedCategories = new Set()
     let selectedPrompts = writable({
         character: null,
+        hats: null,
+        handoff: null,
         colors: null,
         glasses: null,
-        hats: null,
         style: null,
-        handoff: null,
     });
     let selectedRarities = new Set()
     let selectedPromptCounts = new Set()

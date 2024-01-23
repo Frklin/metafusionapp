@@ -11,6 +11,8 @@ import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
 import PromptList from '$lib/components/itemDetail/PromptList.svelte';
 import { page } from '$app/stores';
 import { onMount } from 'svelte';
+	import { dataLength } from 'ethers';
+	import { doc } from 'prettier';
 
 let cardId;
 
@@ -21,6 +23,20 @@ $: if (cardId) {
     fetchCardByID(cardId);
 }
 
+async function loopFetchImageId() {
+    for (let i = 0; i < 10000; i++) {
+        document.getElementById('image').src = 'http://localhost:3000/card/' + cardId + '/image';
+        
+        // check if image is loaded
+        if (document.getElementById('image').complete) {
+            break;
+        }
+
+        // sleep
+        await new Promise(r => setTimeout(r, 100));
+    }
+}
+
 async function fetchCardByID(cardID) {
     try {
         const cardResponse = await fetch('http://localhost:3000/card/' + cardID);
@@ -29,6 +45,7 @@ async function fetchCardByID(cardID) {
         }
         card = await cardResponse.json();
         card.img_path = 'http://localhost:3000/card/' + cardId + '/image';
+        loopFetchImageId();
         card.n = cardId.slice(-4);
     } catch (err) {
         error = err;
@@ -55,7 +72,7 @@ onMount(async () => {
             <div class="grid grid-cols-1 lg:grid-cols-7 gap-6 px-10 pt-10">
                 <!-- IMAGE -->
                 <div class="lg:col-span-3"> 
-                    <img src="{card.img_path}" alt={`Card ${card.n}`} class="w-full object-cover rounded-md" />
+                    <img src="{card.img_path}" alt={`Card ${card.n}`} class="w-full object-cover rounded-md" id="image"/>
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">

@@ -47,7 +47,7 @@
                     {/if}
                   </div>
                   <div class="flex flex-col gap-1 w-full items-center rounded-xl  p-2">
-                    <span class="text-base font-bold text-primary">{getPrompt(category).rarity*100}%</span>
+                    <span class="text-base font-bold text-primary">{getPrompt(category) ? getPrompt(category).rarity*100 : "0"}%</span>
                     <span class="text-xs font-normal text-secondary">FLOOR: {getPrompt(category) ? '2.03 ETH' : '0.00 ETH'} </span>
                   </div>
                 </div>
