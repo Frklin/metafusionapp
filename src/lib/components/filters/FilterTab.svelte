@@ -12,9 +12,9 @@
 
     export let minPrice: number = 0;
     export let maxPrice: number = 1000000;
-    export let selectedCategories: Set<String> = new Set()
-    export let selectedPromptCounts: Set<Number> = new Set()
-    export let selectedRarities: Set<String> = new Set()
+    export let selectedCategories: any = new Set()
+    export let selectedPromptCounts: any = new Set()
+    export let selectedRarities: any = new Set()
 
 
     function filterPrice() {

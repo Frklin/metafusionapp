@@ -1,7 +1,7 @@
 <script lang="ts">
 // @ts-nocheck
     import { NFTtypetoString, weiToETH } from '$lib/index.js';
-    import PromptCardFull from '$lib/components/PromptCard.svelte';
+    import PromptCardFull from '$lib/components/PromptCardFull.svelte';
     export let items: any;
     export let filterTabOpen: boolean;
     export let isMine: boolean=false;

@@ -39,19 +39,12 @@
         <div class="flex flex-row justify-between w-full h-full l p-2 bg-background rounded-b-xl">
             <div class="grid grid-cols-6 w-full gap-3 justify-between">
               {#each CATEGORIES as category}
-              <!-- <PromptCardFull prompt={getPrompt(category)} />  -->
                 <div class= "gap-2 flex flex-col items-center  border-white/20 h-full p-6">
                   <span class="text-xs text-secondary font-semibold">{category.toUpperCase()}</span>
                   <div class="w-full h-[320px] rounded-xl bg-card_background ">
                     {#if getPrompt(category)}
-                      <PromptCardFull item={getPrompt(category)}/>
+                      <PromptCardFull item={getPrompt(category)} selectedPrompts={{}}/>
                     {/if}
-                    <!-- {#if getPrompt(category).image}
-                      <div class="flex h-32 bg-white w-4">
-                      <img src="{getPrompt(category).image}" alt="{getPrompt(category).promptid}" class="w-full h-full object-fill rounded-xl" />
-                    </div>
-                    {/if} -->
-                    <!-- <span class="text-xs font-semibold text-secondary">{getPrompt(category).name}</span> -->
                   </div>
                   <div class="flex flex-col gap-1 w-full items-center rounded-xl  p-2">
                     <span class="text-base font-bold text-primary">{getPrompt(category).rarity*100}%</span>

@@ -10,6 +10,7 @@
     import HandoffIcon from '$lib/assets/categories/handoff.svg';
     
     export let item: any;
+    export let blocked: boolean=false;
 
     let category = categoryConverter(item.category);
     let categoryIcon =
@@ -22,27 +23,33 @@
         null;
 </script>
 
-
-
-<div class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300 {RARITY_COLORS[rarityConverter(item.rarity)]} ">
+<div class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300  {blocked ? 'opacity-30' : ''} {RARITY_COLORS[rarityConverter(item.rarity)]}">
     <img src={CardTheme} class={`w-full h-full rounded-xl p-2`} alt="card theme" />
 
     <div class="absolute inset-0 flex flex-col justify-between items-center">
         <!-- Top Content -->
-        <div class="mt-[20%]">
+        <div class="mt-[10%]">
             <div class="h-32 w-32 flex items-center justify-center">
-                <img src={categoryIcon} alt="category icon" class="w-16 h-16 " />
+                <img src={categoryIcon} alt="category icon" class="w-16 h-16" />
             </div>
         </div>
-        <!-- Bottom Content -->
-        <div class="mb-[30%]">
+        <!-- Middle Content -->
+        <div class="mb-[15%]">
             <div class="h-12 w-42 flex items-center justify-center">
-                <!-- Place your text here -->
                 <span class="inline-block text-lg text-transparent bg-clip-text {RARITY_COLORS[rarityConverter(item.rarity)]} ">{item.name}</span>
             </div>
         </div>
+        <!-- Bottom Content -->
+        <div class="mb-[15%]">
+            <div class="flex w-full items-center text-center justify-center">
+                <div class="rounded-full w-10 h-10 flex items-center justify-center {RARITY_COLORS[rarityConverter(item.rarity)]} {rarityConverter(item.rarity) === 'common' ? 'bg-white/60' : ''}">
+                    <div class="text-center self-center text-card_background w-full h-full">
+                        <div class="flex items-center justify-center h-full">{item.category}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
+    
 </div>
 
