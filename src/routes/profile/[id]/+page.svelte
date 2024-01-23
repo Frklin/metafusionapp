@@ -66,7 +66,7 @@
     <!-- CONTENT -->
     <div class="absolute top-[29%] w-full px-10 gap-20">
         <!-- PROFILE INFO -->
-        <Profile username={user.username} avatar={user.avatar} address={user.address} />
+        <Profile userId={userId} username={user.username} avatar={user.avatar} address={user.address} />
 
         <div class="flex flex-col w-full items-center pt-10">
 

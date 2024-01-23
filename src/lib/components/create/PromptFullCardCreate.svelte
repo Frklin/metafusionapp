@@ -13,6 +13,7 @@
     
     export let item: any;
     export let blocked: boolean=false;
+    export let freezed: boolean=false;
     export let selectedPrompts: any;
     export let selectedCategories: any;
     export let categoryFocused: any;
@@ -67,7 +68,7 @@
 </script>
 
 <button disabled={item.isListed} on:click={()=>selectPrompt(item)}>
-    <div class="relative w-full h-full rounded-xl  {blocked ? 'opacity-30' : 'group-hover:scale-105 transition-transform duration-300 '} {RARITY_COLORS[rarityConverter(item.rarity)]}">
+    <div class="relative w-full h-full rounded-xl  {(blocked || freezed) ? 'opacity-30' : 'group-hover:scale-105 transition-transform duration-300 '} {RARITY_COLORS[rarityConverter(item.rarity)]}">
         <img src={CardTheme} class={`w-full h-full rounded-xl p-2`} alt="card theme" />
 
         <div class="absolute inset-0 flex flex-col justify-between items-center">

@@ -7,11 +7,13 @@
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
     import PromptGridCreate from '$lib/components/create/PromptGridCreate.svelte';
     import { categoryConverter, user_pk } from '$lib';
+    import { MetaMaskStore } from '$lib';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
 	import ForgeButton from '$lib/components/create/ForgeButton.svelte';
 	import StickyPromptCreate from '$lib/components/create/StickyPromptCreate.svelte';
 
+    const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
     let mainRef: HTMLDivElement;
     let promptsRef: HTMLDivElement;
     let scrollTarget: HTMLDivElement;
@@ -41,6 +43,7 @@
                 const res = await fetch('http://localhost:3000/user/'+user_pk);
                 const data = await res.json();
                 prompts = data.prompts;
+                filteredPrompts = prompts;
             } catch (err) {
                 console.error(err);
             }
@@ -55,8 +58,8 @@
     }
 
     onMount(async () => {
+        await init();
         await fetchPrompts();
-        filteredPrompts = prompts;
     });
 
     // onMount(() => {
@@ -66,7 +69,10 @@
     //     window.removeEventListener('scroll', handleScroll);
     //     };
     // });
-
+    // $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
+    //             if (selectedCategories.size === 0) return true; 
+    //             return selectedCategories.has(categoryConverter(prompt.category))
+    // }) : prompts;
     $: isForgable = Object.values($selectedPrompts).some(prompt => prompt != null && categoryConverter(prompt.category) === 'character');
 
 </script>
@@ -79,7 +85,7 @@
 
         <!-- BOTTOM PART -->
         <div class="absolute top-1/2 w-full px-10">
-            <PromptCreate bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen={filterTabOpen} scrollTarget={scrollTarget} promptsRef={promptsRef}/>
+            <PromptCreate  bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen={filterTabOpen} scrollTarget={scrollTarget} promptsRef={promptsRef}/>
             <!-- STICKY PROMPT -->
             <StickyPromptCreate bind:selectedPrompts bind:isSticky={isSticky} bind:mainRef={mainRef} bind:isForgable />
 
@@ -95,7 +101,7 @@
                         <FilterTab bind:filteredItems={filteredPrompts} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
                     {/if}
                     <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
-                        <PromptGridCreate items={prompts} bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen mainRef={mainRef}/>
+                        <PromptGridCreate bind:items={filteredPrompts} bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen mainRef={mainRef}/>
                     </div>
                 </div>
 

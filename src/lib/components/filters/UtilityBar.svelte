@@ -13,64 +13,61 @@
 	import SearchBar from './SearchBar.svelte';
 	import ViewType from './ViewType.svelte';
     import SortTab from './SortTab.svelte';
+	import { categoryConverter, convertIdtoHexCode } from '$lib';
 
     function toggleFilterTab() {
         filterTabOpen = !filterTabOpen;
     }
 
-            
+    
     function filterItems(query:string) {
         if (!query) return items;
 
         if (fromWhere === 'collection') {
             let filtered = [];
             for(let i=0; i<items.length; i++) {
-                if (items[i].NFTtype==0) {
+                if (items[i].nft_type==0) {
                     if ("Packets".toLowerCase().includes(query.toLowerCase()) || 
                     "Packs".toLowerCase().includes(query.toLowerCase())) {
                         filtered.push(items[i]);
                     }
                 }
-                else if (items[i].NFTtype==1) {
+                else if (items[i].nft_type==1) {
                     if (items[i].name.toLowerCase().includes(query.toLowerCase()) || 
-                    items[i].category.toLowerCase().includes(query.toLowerCase())) {
+                    categoryConverter(items[i].category).toLowerCase().includes(query.toLowerCase())) {
                         filtered.push(items[i]);
                     }
                 }
-                else if (items[i].NFTtype==2) {
-                    if (items[i].prompts.some(prompt => 
-                    prompt.name.toLowerCase().includes(query.toLowerCase()) || 
-                    prompt.category.toLowerCase().includes(query.toLowerCase())
-                    )) {
-                        filtered.push(items[i]);
-                    }
-                }
+                // else if (items[i].nft_type==2) {
+                //     if (items[i].prompts.some(prompt => 
+                //     prompt.name.toLowerCase().includes(query.toLowerCase()) || 
+                //     prompt.category.toLowerCase().includes(query.toLowerCase())
+                //     )) {
+                //         filtered.push(items[i]);
+                //     }
+                // }
             }
             return filtered;
         }
-        if (items[0].NFTtype==0) return items;
-        else if (items[0].NFTtype==1) {
+        if (items[0].nft_type==0) return items;
+        else if (items[0].nft_type==1) {
             return filteredItems.filter((prompt) => {
                 return prompt.name.toLowerCase().includes(query.toLowerCase()) || 
-                prompt.category.toLowerCase().includes(query.toLowerCase());
+                categoryConverter(prompt.category).toLowerCase().includes(query.toLowerCase());
             });
         }
-        else if (items[0].NFTtype==2) {
+        else if (items[0].nft_type==2) {
             return filteredItems.filter((card) => {
-                return card.prompts.some(prompt => 
-                prompt.name.toLowerCase().includes(query.toLowerCase()) || 
-                prompt.category.toLowerCase().includes(query.toLowerCase())
-                );
+                return card.id.toLowerCase().includes(convertIdtoHexCode(query.toLowerCase()))
             });
         }
     }
-
 
     $: filteredItems = filterItems(searchQuery);
 </script>
 
 
-
+{#if items.length > 0}
 <div class="flex w-full h-20 px-2 items-center bg-background gap-x-3 sticky top-[64px] " style="z-index: 1000;">
 
     <!-- FILTER BUTTON -->
@@ -97,3 +94,4 @@
     {/if}
 
 </div>
+{/if}

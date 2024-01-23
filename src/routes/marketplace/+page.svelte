@@ -33,6 +33,7 @@
     let cards = [];
     let prompts = [];
     let packs = [];
+    let filteredItems = [];
 
     async function fetchCards() {
         try {
@@ -45,6 +46,7 @@
                 cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
                 cards[i].n =  cards[i].id.slice(-4);
             }
+            filteredItems = cards;
         } catch (err) {
             error = err;
         }
@@ -61,6 +63,7 @@
             for (let i = 0; i < prompts.length; i++) {
                 prompts[i].n = prompts[i].id.slice(-4);
             }
+            filteredItems = prompts;
         } catch (err) {
             error = err;
         }
@@ -77,12 +80,14 @@
                 packs[i].img_path = Packet;
                 packs[i].n = packs[i].id.slice(-4);
             }
+            filteredItems = packs;
         } catch (err) {
             error = err;
         }
     }
     onMount(async () => {
         await fetchCards();
+        filteredItems = cards;
     });
 
     $: {
@@ -94,9 +99,10 @@
         fetchPacks();
     }
 }
-    $: filteredItems = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
+    // $: filteredItems = items//selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
     $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
 </script>
+
 
 
 <div class="flex w-full flex-col items-start" id="main">

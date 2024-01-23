@@ -2,16 +2,27 @@
     import { addressFormatter } from '$lib/index.js';
     import { clipboard } from '@skeletonlabs/skeleton';
     import { user_pk } from '$lib';
+    import { writable } from 'svelte/store';
     import  Pencil  from '$lib/assets/icons/pencil.svg';
     import Copy from '$lib/assets/icons/copy.png';
+	import { onMount } from 'svelte';
+	import { ContractTransactionResponse } from 'ethers';
+    
 
-
+    export let userId: number;
     export let avatar: string;
     export let username: string;
     export let address: string;
 
     let tooltipVisible = false;
     let tooltipText = 'Copy';
+    let name: string = '';
+
+    let editing = writable(false);
+
+    function toggleEdit() {
+        editing.update(n => !n);
+    }
 
     function showTooltip() {
         tooltipVisible = true;
@@ -25,6 +36,21 @@
     function copyAddress() {
         tooltipText = 'Copied!';
     }
+
+    function saveNewUsername(event) {
+        event.preventDefault();
+        const newUsername = event.target.username.value;
+        name = newUsername;
+        localStorage.removeItem(userId.toString());
+        localStorage.removeItem(username);
+        localStorage.setItem(userId.toString(), newUsername);
+        localStorage.setItem(newUsername, userId.toString());
+        editing.set(false);
+    }
+
+    onMount(() => {
+        name = localStorage.getItem(userId.toString()) || username;
+    });
 
     $: isMine = address === user_pk;
 </script>
@@ -44,10 +70,14 @@
         <!-- PROFILE NAME AND ADDRESS -->
         <div class="flex flex-col justify-center items-start gap-2">
             <div class="flex flex-row gap-3 items-center">
-             <span class="text-4xl font-semibold text-primary">{username}</span>
-             {#if isMine}
-                <img src={Pencil} alt="Pencil" class="w-6 h-6 opacity-50 hover:opacity-100 cursor-pointer" />
-            {/if}
+                {#if $editing}
+                <form class="flex items-center" on:submit={saveNewUsername}>
+                  <input class="text-4xl font-semibold text-primary bg-transparent border-b-2 border-primary" name="username" type="text" placeholder={username} />
+                </form>
+              {:else}
+                <span class="text-4xl font-semibold text-primary">{name}</span>
+                {#if isMine}<img src={Pencil} alt="Edit" class="w-6 h-6 opacity-50 hover:opacity-100 cursor-pointer" on:click={toggleEdit} />{/if}
+              {/if}
             </div>
             <div class="flex flex-row gap-2">
             <button 

@@ -11,6 +11,7 @@
     import { writable } from "svelte/store";
     import CardTheme from "$lib/assets/cardbg.png";
 	import PromptCardFull from "../PromptCardFull.svelte";
+    import { categoryConverter } from "$lib";
 
 
     let category_colors: any = {
@@ -28,6 +29,10 @@
             selectedCategories.delete(category);
             selectedCategories = new Set(selectedCategories);
             categoryFocused.set(true);
+            // prompts.filter(prompt => {
+            //     if (selectedCategories.size === 0) return true; 
+            //     return selectedCategories.has(categoryConverter(prompt.category))
+            // });
         } else {
         filterTabOpen = true;
         selectedCategories.clear();
@@ -65,7 +70,7 @@
                             </button>
                             <div class="flex flex-col gap-1 w-full items-center rounded-xl p-2">
                                 <span class="text-sm font-normal text-secondary">Rarity</span>
-                                <span class="text-sm font-bold text-primary">{$selectedPrompts[category]?.rarity ?? 0}%</span>
+                                <span class="text-sm font-bold text-primary">{$selectedPrompts[category] ? $selectedPrompts[category].rarity *100 : 0}%</span>
                             </div>
                         </div>
                     {/each}

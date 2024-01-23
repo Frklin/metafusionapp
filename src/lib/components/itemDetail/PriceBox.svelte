@@ -21,13 +21,19 @@
 
     function buyItem() {
         let price = weiToETH(itemPrice);
+        let selected_function;
+
         if (itemType == 0) {
-            buyPacket(itemID, price.toString());
+            selected_function = buyPacket;
         } else if (itemType == 1) {
-            buyPrompt(itemID, price.toString());
+            selected_function = buyPrompt;
         } else {
-            buyImage(itemID, price.toString());
+            selected_function = buyImage;
         }
+
+        selected_function(itemID, price.toString()).then((res) => {
+            location.reload();
+        });
         
     }
 

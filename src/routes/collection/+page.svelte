@@ -13,7 +13,9 @@
     import { sortOptions } from '$lib/constants.js';
     import { user_pk } from '$lib';
     import { onMount } from 'svelte';
-    
+    import { MetaMaskStore } from '$lib';
+
+    const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
     let filterTabOpen = false;
     let searchQuery = '';
     let selectedSort = sortOptions[2];
@@ -40,7 +42,8 @@
                 for(let i=0; i<cards.length; i++){
                     cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
                 }
-                items = data.prompts.concat(cards);//.concat(data.packets);
+                let prompts = data.prompts.filter(prompt => prompt.isFreezed == false);
+                items = prompts.concat(cards);//.concat(data.packets);
             } catch (err) {
                 console.error(err);
             }
@@ -50,12 +53,13 @@
     let filteredItems = items;
 
     onMount(async () => {
+        await init();
         await getUserData();
     });
 
 </script>
 
-
+{#if user.username != ''}
 <div class="flex w-full flex-col items-start " id="main">
     <!-- COVER -->
     <div class="relative w-full " id="main">
@@ -65,7 +69,7 @@
     <!-- CONTENT -->
     <div class="absolute top-[29%] w-full px-10 gap-20">
         <!-- PROFILE INFO -->
-        <Profile username={user.username} avatar={user.avatar} address={user.address} />
+        <Profile userId={user_pk} username={user.username} avatar={user.avatar} address={user.address} />
 
         <div class="flex flex-col w-full items-center pt-10">
 
@@ -77,7 +81,7 @@
                     <FilterTab bind:filteredItems={filteredItems} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
                 {/if}
                 <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
-                    <GridView items={items} bind:filterTabOpen isMine={true} fromWhere={"collection"}/>
+                    <GridView items={filteredItems} bind:filterTabOpen isMine={true} fromWhere={"collection"}/>
                 </div>
             </div>
         </div>
@@ -86,3 +90,4 @@
 
 
 </div>
+{/if}

@@ -188,3 +188,8 @@ export function categoryConverter(category: number) {
       return "style";
   }
 }
+
+
+export function convertIdtoHexCode(query: number) {
+ return ""
+}

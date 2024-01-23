@@ -32,7 +32,3 @@ export const CATEGORY_ICONS = {
     style: '$lib/assets/categories/style.svg'
 };
 
-
-// function calculateRarity(a: any) {
-//     return a.prompts.reduce((total, prompt) => total + prompt.rarity, 0);
-// }
