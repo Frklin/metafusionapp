@@ -45,12 +45,17 @@
         price = computePrice();
     }
 
-    function mintPacket() {
-        let collectionId = 1;
+    async function loopMint(collectionId) {
         for (let i = 0; i < numberOfPackets; i++){
-            forgePacket(collectionId)
+            await forgePacket(collectionId)
         }
-        close();
+    }
+
+    function mintPacket() {
+        loopMint(1).then(() => {
+            location.reload();
+            close();
+        })
     }
 
 

@@ -959,7 +959,7 @@ async function listPacket(packetId: number, price: string) {
 }
 
 async function unlistPacket(packetId: number) {
-  let tx = await contract.unlistPrompt(packetId);
+  let tx = await contract.unlistPacket(packetId);
   await tx.wait();
   return tx;
 }  

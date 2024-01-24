@@ -1,7 +1,7 @@
 <script lang="ts">
        //@ts-nocheck
     import { buyPacket, buyPrompt, buyImage } from '$lib/metafusion_interactions';
-    import {user_pk, weiToETH} from '$lib/index.js';
+    import {user_pk, weiToETH, NFTtypetoString} from '$lib/index.js';
 	
     import MyCardButtons from './buttons/MyCardButtons.svelte';
 	import MyPromptButtons from './buttons/MyPromptButtons.svelte';
@@ -32,7 +32,7 @@
         }
         console.log(itemID)
         selected_function(itemID, price.toString()).then((res) => {
-            location.reload();
+            location.replace('/collection/'+ NFTtypetoString(itemType) + '/' + itemID);
         });
         
     }
