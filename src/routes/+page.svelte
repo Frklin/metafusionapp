@@ -2,7 +2,7 @@
     //ts-nocheck
     import { onMount } from 'svelte';
     import cover from '$lib/assets/coverhdnowm.mp4';
-    import coverImg from '$lib/assets/createcover.png';
+    import coverImg from '$lib/assets/Cover 2k.png';
   
     let video;
     let showVideo = true;

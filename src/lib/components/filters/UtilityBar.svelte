@@ -32,7 +32,7 @@
         }
         else if (items[0].nft_type==2) {
             return filteredItems.filter((card) => {
-                return card.id.toLowerCase().includes(convertIdtoHexCode(query.toLowerCase()))
+                return card.prompts.toLowerCase().includes((query.toLowerCase()))
             });
         }
     }
