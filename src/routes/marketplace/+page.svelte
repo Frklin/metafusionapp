@@ -4,6 +4,7 @@
 
     import { NFTTypes, sortOptions } from '$lib/constants';
     import { onMount } from 'svelte';
+    import { categoryConverter, rarityConverter } from '$lib';
 
 
     import Packet from '$lib/assets/Packs/packet.jpg'
@@ -99,6 +100,19 @@
 }
     // $: filteredItems = items//selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
     $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
+    $: filteredItems = (items.length > 0 && selectedNFTType === 'Prompts') ?  items.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+    }).filter(prompt => {
+        if (selectedRarities.size === 0) return true; 
+        return selectedRarities.has(rarityConverter(prompt.rarity))
+    }).filter((item) => {
+        return item.price >= minPrice && item.price <= maxPrice;
+    }).filter((prompt) => {
+                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+            }) : items;
+
 </script>
 
 
@@ -115,7 +129,7 @@
         <!-- MAIN -->
         <div class="flex w-full scrollbar">
             {#if filterTabOpen}
-                <FilterTab bind:filteredItems={filteredItems} fromWhere={"marketplace"} bind:minPrice bind:maxPrice bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
+                <FilterTab items={items} bind:filteredItems={filteredItems} itemsType={selectedNFTType} fromWhere={"marketplace"} bind:minPrice bind:maxPrice bind:selectedCategories bind:selectedRarities/>
             {/if}
 
             <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">

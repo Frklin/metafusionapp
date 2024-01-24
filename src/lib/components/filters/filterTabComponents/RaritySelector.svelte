@@ -1,9 +1,12 @@
 <script lang="ts">
    //@ts-nocheck
+    export let items: any;
+    export let filteredItems: any;
     export let selectedRarities: Set<String> = new Set()
 
     import SortButton from '$lib/assets/icons/sort.png';
     import { RARITIES } from "$lib/constants";
+    import { rarityConverter } from "$lib";
 
     let showRarityFilter: boolean = false;
 
@@ -17,8 +20,17 @@
         } else {
             selectedRarities.delete(category);
         }
+        filteredItems = filterRarities();
     }
 
+
+    function filterRarities() {
+        if (selectedRarities.size == 0) return items;
+
+        return filteredItems.filter((item:any) => {
+                return selectedRarities.has(rarityConverter(item.rarity));
+        });
+    }
 
 </script>
 

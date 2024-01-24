@@ -11,6 +11,11 @@
 
 <div class={`w-full grid gap-4 p-4 
     ${filterTabOpen ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' : 'grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 '}`}>                        
+    {#if items.length == 0}
+        <div class="col-span-full text-center text-gray-400">
+            <p>No items found</p>
+        </div>
+    {/if}
     {#each items as item (item.id)}
         <a href={'/'+fromWhere+'/'+NFTtypetoString(item.nft_type)+'/'+item.id}>
             <div class="relative bg-card_background rounded-md shadow overflow-hidden">

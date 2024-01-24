@@ -1,12 +1,12 @@
 <script lang='ts'>
-
+    //@ts-nocheck
     import Cover from '$lib/components/Cover.svelte';
 	import PromptCreate from '$lib/components/create/PromptCreate.svelte';
 	import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
     import { sortOptions } from '$lib/constants.js';
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
     import PromptGridCreate from '$lib/components/create/PromptGridCreate.svelte';
-    import { categoryConverter, user_pk } from '$lib';
+    import { categoryConverter, user_pk, rarityConverter } from '$lib';
     import { MetaMaskStore } from '$lib';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
@@ -77,11 +77,18 @@
         window.removeEventListener('scroll', handleScroll);
         };
     });
-    // $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
-    //             if (selectedCategories.size === 0) return true; 
-    //             return selectedCategories.has(categoryConverter(prompt.category))
-    // }) : prompts;
+
     $: isForgable = Object.values($selectedPrompts).some(prompt => prompt != null && categoryConverter(prompt.category) === 'character');
+    $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+    }).filter(prompt => {
+        if (selectedRarities.size === 0) return true; 
+        return selectedRarities.has(rarityConverter(prompt.rarity))
+    }).filter((prompt) => {
+                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+            }) : prompts;
 
 </script>
 
@@ -109,9 +116,14 @@
 
                 <div class="flex w-full scrollbar">
                     {#if filterTabOpen}
-                        <FilterTab bind:filteredItems={filteredPrompts} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
+                        <FilterTab items={prompts} bind:filteredItems={filteredPrompts} itemsType={"Prompts"} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
                     {/if}
                     <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
+                        {#if filteredPrompts.length === 0}
+                            <div class="flex flex-col items-center justify-center w-full h-full">
+                                <span class="text-2xl font-bold text-primary">No Prompts Found</span>
+                            </div>
+                        {/if}
                         <PromptGridCreate bind:items={filteredPrompts} bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen mainRef={mainRef}/>
                     </div>
                 </div>

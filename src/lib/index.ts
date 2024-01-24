@@ -191,5 +191,7 @@ export function categoryConverter(category: number) {
 
 
 export function convertIdtoHexCode(query: number) {
+   // ['
  return ""
 }
+

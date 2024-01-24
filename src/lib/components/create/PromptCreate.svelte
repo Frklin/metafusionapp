@@ -29,10 +29,6 @@
             selectedCategories.delete(category);
             selectedCategories = new Set(selectedCategories);
             categoryFocused.set(true);
-            // prompts.filter(prompt => {
-            //     if (selectedCategories.size === 0) return true; 
-            //     return selectedCategories.has(categoryConverter(prompt.category))
-            // });
         } else {
         filterTabOpen = true;
         selectedCategories.clear();

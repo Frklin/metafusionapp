@@ -12,7 +12,7 @@
     import { sortOptions, NFTTypes, profileImages } from '$lib/constants.js';
     import { user_pk } from '$lib';
     import { onMount } from 'svelte';
-    import { MetaMaskStore } from '$lib';
+    import { MetaMaskStore, categoryConverter, rarityConverter } from '$lib';
 	import { filter } from '@skeletonlabs/skeleton';
 
     const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
@@ -88,35 +88,11 @@
         }
     }
 
-    async function getUserData() {
-        if (user_pk){
-            try {
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
-                const data = await res.json();
-                let cards = data.cards;
-                let packs = data.packets;
-                user.address=user_pk
-                user.username='User'+user_pk.substring(user_pk.length - 4);
-                for(let i=0; i<cards.length; i++){
-                    cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
-                }
-                for(let i=0; i<packs.length; i++){
-                    packs[i].img_path = Packet;
-                }
-                let prompts = data.prompts.filter(prompt => prompt.isFreezed == false);
-                items = data.packets.concat(cards)//.concat(data.packets);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    }
-
-
 
     onMount(async () => {
         await init();
         await fetchUserCards();
-        filteredItems = cards;
+        // filteredItems = cards;
     });
 
     $: {
@@ -129,6 +105,17 @@
     }
     }
     $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
+    $: filteredItems = (items.length > 0 && selectedNFTType==='Prompts') ?  items.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+    }).filter(prompt => {
+        if (selectedRarities.size === 0) return true; 
+        return selectedRarities.has(rarityConverter(prompt.rarity))
+    }).filter((prompt) => {
+                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+            })
+ : filteredItems;
 
 
 </script>
@@ -150,12 +137,12 @@
             <TypeSelector bind:selectedNFTType/>
 
             <!-- INFOS -->
-            <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>
+            <UtilityBar items={items} bind:filteredItems={filteredItems}  bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>
             
 
             <div class="flex w-full scrollbar">
                 {#if filterTabOpen}
-                    <FilterTab bind:filteredItems={filteredItems} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
+                    <FilterTab items={items} bind:filteredItems={filteredItems} itemsType={selectedNFTType} bind:selectedCategories bind:selectedRarities fromWhere={"collection"} />
                 {/if}
                 <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
                     <GridView items={filteredItems} bind:filterTabOpen isMine={true} fromWhere={"collection"}/>

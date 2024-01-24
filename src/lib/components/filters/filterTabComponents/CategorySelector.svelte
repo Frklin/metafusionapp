@@ -1,10 +1,13 @@
 <script lang="ts">
    //@ts-nocheck
+    export let items: any;
+    export let filteredItems: any;
     export let selectedCategories: Set<String>;  
   
 
     import { CATEGORIES } from "$lib/constants";
     import SortButton from '$lib/assets/icons/sort.png';
+	import { categoryConverter } from "$lib";
 
     let showCategoryFilter: boolean = true;
 
@@ -19,10 +22,21 @@
             selectedCategories.delete(category);
         }
         selectedCategories = new Set(selectedCategories);
-
+        filteredItems = filterCategories();
     }
         
+    function filterCategories() {
+        if (selectedCategories.size == 0) return items;
+        return items.filter((item:any) => {
+            if (filteredItems[0].nft_type==1) {
+                return selectedCategories.has(categoryConverter(item.category));
+            }
+            else if (filteredItems[0].nft_type==2) {
+                return item.prompts.some((prompt: { category: String; }) => selectedCategories.has(prompt.category));
+            }
+        });
 
+    }
 </script>
 
 
@@ -41,6 +55,7 @@
         <div class="flex flex-row w-full items-center justify-center self-stretch ">
             <label for="{category}" class="text-secondary text-sm font-semibold leading-6 text-left flex-grow hover:text-white/80 cursor-pointer">{category.toUpperCase()}</label>
             <input type="checkbox" 
+                    checked={selectedCategories.has(category)}
                     name="{category}" 
                     id="{category}"
                     on:change="{e => updateSelectedCategories(category, e.target.checked)}" 

@@ -23,32 +23,6 @@
     function filterItems(query:string) {
         if (!query) return items;
 
-        if (fromWhere === 'collection') {
-            let filtered = [];
-            for(let i=0; i<items.length; i++) {
-                if (items[i].nft_type==0) {
-                    if ("Packets".toLowerCase().includes(query.toLowerCase()) || 
-                    "Packs".toLowerCase().includes(query.toLowerCase())) {
-                        filtered.push(items[i]);
-                    }
-                }
-                else if (items[i].nft_type==1) {
-                    if (items[i].name.toLowerCase().includes(query.toLowerCase()) || 
-                    categoryConverter(items[i].category).toLowerCase().includes(query.toLowerCase())) {
-                        filtered.push(items[i]);
-                    }
-                }
-                // else if (items[i].nft_type==2) {
-                //     if (items[i].prompts.some(prompt => 
-                //     prompt.name.toLowerCase().includes(query.toLowerCase()) || 
-                //     prompt.category.toLowerCase().includes(query.toLowerCase())
-                //     )) {
-                //         filtered.push(items[i]);
-                //     }
-                // }
-            }
-            return filtered;
-        }
         if (items[0].nft_type==0) return items;
         else if (items[0].nft_type==1) {
             return filteredItems.filter((prompt) => {
@@ -67,7 +41,7 @@
 </script>
 
 
-{#if items.length > 0}
+<!-- {#if items.length > 0} -->
 <div class="flex w-full h-20 px-2 items-center bg-background gap-x-3 sticky {fromWhere === 'create' ? 'top-[calc(64px+96px)]' : 'top-[64px]'} " style="z-index: 1000;">
 
     <!-- FILTER BUTTON -->
@@ -75,23 +49,19 @@
         <img src={FilterButton} class:opacity-100={filterTabOpen}  class:opacity-50={!filterTabOpen}  class="w-5 h-5" alt="filter" />
     </div>
 
-    <!-- RESULTS NUMBER -->
     <div class="inline-flex items-center h-7 pr-3 pl-4 ">
         <span class="text-secondary text-base font-normal leading-6">{filteredItems.length} results</span>
     </div>
         
-    <!-- SEARCH BAR -->
     <SearchBar bind:searchQuery />
 
-    <!-- SORT BUTTON -->
     <div class="relative">
         <SortTab bind:filteredItems={filteredItems} bind:selectedSort />
     </div>
 
     {#if (fromWhere !== 'collection')}
-        <!-- VIEWS -->
         <ViewType bind:selectedView={viewtype} />
     {/if}
 
 </div>
-{/if}
+<!-- {/if} -->

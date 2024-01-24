@@ -12,6 +12,11 @@
 
 <div class={`w-full grid gap-4 p-4 
     ${filterTabOpen ? 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'}`}>                    
+    {#if items.length == 0}
+        <div class="col-span-full text-center text-gray-400">
+            <p>No items found</p>
+        </div>
+    {/if}
     {#each items as item (item.id)}
     <a href={'/'+fromWhere+'/'+NFTtypetoString(itemType)+'/'+item.id}>
         <div class="flex flex-col rounded-md bg-card_background shadow group">
