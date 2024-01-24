@@ -1,16 +1,13 @@
 <script>
     // @ts-nocheck
-    import image1032 from '$lib/assets/NFTs/1032.avif';
-    import image2154 from '$lib/assets/NFTs/2154.avif';
-    import image5324 from '$lib/assets/NFTs/5324.avif';
-    import image5214 from '$lib/assets/NFTs/5214.avif';
-    import image4153 from '$lib/assets/NFTs/4153.avif';
+
 	import Cover from '$lib/components/Cover.svelte';
     import Profile from '$lib/components/Profile.svelte';
     import GridView from '$lib/components/marketplace/GridView.svelte';
     import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
     import Packet from '$lib/assets/Packs/packet.jpg'
+    import MintButton from '$lib/components/MintButton.svelte';    
     import { sortOptions } from '$lib/constants.js';
     import { user_pk } from '$lib';
     import { onMount } from 'svelte';
@@ -76,11 +73,13 @@
         <!-- PROFILE INFO -->
         <Profile userId={user_pk} username={user.username} avatar={user.avatar} address={user.address} />
 
-        <div class="flex flex-col w-full items-center pt-10">
+        <div class="flex flex-col  w-full items-center pt-10">
+            <!-- <div class="w-full flex -mt-[60px] justify-end"><MintButton /></div> -->
 
             <!-- INFOS -->
             <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>
-        
+            
+
             <div class="flex w-full scrollbar">
                 {#if filterTabOpen}
                     <FilterTab bind:filteredItems={filteredItems} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>

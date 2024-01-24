@@ -32,3 +32,4 @@ export const CATEGORY_ICONS = {
     style: '$lib/assets/categories/style.svg'
 };
 
+export const mintingCost = 0.01;

@@ -55,7 +55,7 @@
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
-                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner} itemEdition={pack.collection}/>
+                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner} itemEdition={pack.collectionId}/>
 
                     <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} itemOwner={pack.owner} itemListed={pack.isListed}/>
 
