@@ -46,3 +46,14 @@
     </div>
     <div class="w-full h-1 bg-white/20"></div>
 </div>
+
+
+<style>
+    .sticky-view {
+      position: sticky;
+      top: 64px ;
+      z-index: 10000;
+      /* Add more styles as needed */
+    }
+
+  </style>

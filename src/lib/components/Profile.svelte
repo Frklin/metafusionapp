@@ -7,8 +7,11 @@
     import Copy from '$lib/assets/icons/copy.png';
 	import { onMount } from 'svelte';
     import MintButton from '$lib/components/MintButton.svelte';    
+    import FrancescoProfile from '$lib/assets/profile/francesco.jpeg';
+    import AndreaProfile from '$lib/assets/profile/andrea.jpeg';
+    import LucaProfile from '$lib/assets/profile/luca.jpg';
 
-    export let userId: number;
+    export let userId: string;
     export let avatar: string;
     export let username: string;
     export let address: string;
@@ -16,6 +19,7 @@
     let tooltipVisible = false;
     let tooltipText = 'Copy';
     let name: string = '';
+    let avatarImg: string = '';
 
     let editing = writable(false);
 
@@ -36,7 +40,7 @@
         tooltipText = 'Copied!';
     }
 
-    function saveNewUsername(event) {
+    function saveNewUsername(event: Event) {
         event.preventDefault();
         const newUsername = event.target.username.value;
         name = newUsername;
@@ -48,9 +52,13 @@
     }
 
     onMount(() => {
-        name = localStorage.getItem(userId.toString()) || username;
+        if (userId) {
+            name = localStorage.getItem(userId) || 'User' + userId.substring(0,4);
+            console.log(name)
+        }
     });
-
+    
+    $ : avatarImg = name === 'Francesco' ? FrancescoProfile : name === 'Andrea' ? AndreaProfile : name === 'Luca' ? LucaProfile : 'https://avatars.githubusercontent.com/u/59870781?v=4';
     $: isMine = address === user_pk;
 </script>
 
@@ -65,7 +73,7 @@
         <div class="w-[90%] flex flex-row items-center gap-6"> 
             <!-- PROFILE IMAGE -->
             <div class="w-28 h-28 rounded-full border-4 border-orange-600">
-                <img src={avatar} class="w-full h-full rounded-full" alt="avatar" />
+                <img src={avatarImg} class="w-full h-full rounded-full object-cover" alt="avatar" />
             </div>
 
             <!-- PROFILE NAME AND ADDRESS -->
@@ -77,7 +85,9 @@
                     </form>
                 {:else}
                     <span class="text-4xl font-semibold text-primary">{name}</span>
-                    {#if isMine}<img src={Pencil} alt="Edit" class="w-6 h-6 opacity-50 hover:opacity-100 cursor-pointer" on:click={toggleEdit} />{/if}
+                    {#if isMine || true}
+                    <img src={Pencil} alt="Edit" class="w-6 h-6 opacity-50 hover:opacity-100 cursor-pointer" on:click={toggleEdit} />
+                    {/if}
                 {/if}
                 </div>
                 <div class="flex flex-row gap-2">
@@ -111,7 +121,8 @@
 
             
         </div>
-
+        {#if isMine}
         <div class="-mr-10"><MintButton /></div>
+        {/if}
     </div>
 </div>

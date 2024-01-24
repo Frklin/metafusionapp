@@ -35,6 +35,11 @@ onMount(async () => {
             <span>Date</span>
         </div>
         <div class="flex flex-col h-[180px] overflow-auto divide-y scrollbar px-2 divide-white/20" style="">
+            {#if item_activity.length == 0}
+            <div class="flex flex-col items-center justify-center h-full">
+                <h1 class="text-3xl font-semibold text-secondary">No Item Activities</h1>
+            </div>
+            {:else}
             {#each item_activity as activity}
             <div class="grid grid-cols-5 text-start items-center px-8 py-3 rounded-xl hover:bg-white/20 duration-100">
                 <span class="text-sm font-semibold text-primary">Sell</span>
@@ -44,6 +49,7 @@ onMount(async () => {
                 <span class="text-sm text-secondary">2h ago</span>
             </div>
             {/each}
+            {/if}
         </div>
     </div>
 </div>

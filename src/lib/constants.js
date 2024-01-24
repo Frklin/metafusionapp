@@ -1,6 +1,6 @@
 // import ethers  from 'hardhat';  
 
-export const CATEGORIES = ['character', 'colors', 'glasses', 'hats', 'style', 'handoff'];
+export const CATEGORIES = ['character', 'hats', 'handoff', 'colors', 'glasses', 'style'];
 
 export const NFTTypes = {'Packs':0, 'Prompts':1, 'Cards':2};
 
@@ -25,7 +25,7 @@ export const RARITY_COLORS = {
   
 export const CATEGORY_ICONS = {
     handoff: '$lib/assets/categories/colors.svg',
-    'character': '$lib/assets/categories/colors.svg',
+    character: '$lib/assets/categories/colors.svg',
     colors: '$lib/assets/categories/colors.svg',
     glasses: '$lib/assets/categories/colors.svg',
     hats: '$lib/assets/categories/colors.svg',
@@ -33,3 +33,13 @@ export const CATEGORY_ICONS = {
 };
 
 export const mintingCost = 0.01;
+
+
+//take some random images from the internet for the profile images
+export const profileImages = [
+    'https://avatars.githubusercontent.com/u/59870781?v=4',
+    'https://avatars.githubusercontent.com/u/143937?v=4',
+    'https://avatars.githubusercontent.com/u/212628?v=4',
+    'https://avatars.githubusercontent.com/u/62235503?v=4'
+];
+

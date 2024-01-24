@@ -62,13 +62,21 @@
         await fetchPrompts();
     });
 
-    // onMount(() => {
-    //     window.addEventListener('scroll', handleScroll);
+    onMount(() => {
+        const handleScroll = () => {
+        const rect = promptsRef.getBoundingClientRect();
+        const offset = window.pageYOffset || document.documentElement.scrollTop;
+        isSticky.set(rect.bottom <= 0)
+        // isSticky.set(offset > 0); // Set to true as soon as we scroll down 
+        };
+        
 
-    //     return () => {
-    //     window.removeEventListener('scroll', handleScroll);
-    //     };
-    // });
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+        window.removeEventListener('scroll', handleScroll);
+        };
+    });
     // $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
     //             if (selectedCategories.size === 0) return true; 
     //             return selectedCategories.has(categoryConverter(prompt.category))
@@ -81,11 +89,14 @@
 {#if prompts.length > 0}
 <div bind:this={mainRef} class="flex w-full flex-col items-start" id="main">
     <div class="relative w-full" id="main">
-        <Cover  />
+        <Cover  fromWhere='create'/>
+    </div>
 
         <!-- BOTTOM PART -->
-        <div class="absolute top-1/2 w-full px-10">
+        <div class="absolute top-1/3 w-full px-10">
+            <div bind:this={promptsRef} class="w-full px-28 -mt-28">
             <PromptCreate  bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen={filterTabOpen} scrollTarget={scrollTarget} promptsRef={promptsRef}/>
+            </div>
             <!-- STICKY PROMPT -->
             <StickyPromptCreate bind:selectedPrompts bind:isSticky={isSticky} bind:mainRef={mainRef} bind:isForgable />
 
@@ -94,7 +105,7 @@
 
             <div bind:this={scrollTarget} class="flex flex-col h-full w-full divide-y divide-white/20">
 
-                <UtilityBar items={prompts} bind:filteredItems={filteredPrompts} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>
+                <UtilityBar items={prompts} bind:filteredItems={filteredPrompts} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"create"}/>
 
                 <div class="flex w-full scrollbar">
                     {#if filterTabOpen}
@@ -108,6 +119,6 @@
             </div>
 
         </div>
-    </div>
+
 </div>
 {/if}

@@ -7,11 +7,13 @@
     import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
     import Packet from '$lib/assets/Packs/packet.jpg'
+    import TypeSelector from '$lib/components/marketplace/TypeSelector.svelte';
     import MintButton from '$lib/components/MintButton.svelte';    
-    import { sortOptions } from '$lib/constants.js';
+    import { sortOptions, NFTTypes, profileImages } from '$lib/constants.js';
     import { user_pk } from '$lib';
     import { onMount } from 'svelte';
     import { MetaMaskStore } from '$lib';
+	import { filter } from '@skeletonlabs/skeleton';
 
     const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
     let filterTabOpen = false;
@@ -20,15 +22,72 @@
     let selectedCategories = new Set()
     let selectedPromptCounts = new Set()
     let selectedRarities = new Set()
+    let selectedNFTType = 'Cards';
     let user = {
             username: '',
-            avatar: 'https://avatars.githubusercontent.com/u/59870781?v=4',
+            avatar: profileImages[Math.floor(Math.random() * profileImages.length)],
             address: '0x123456...7890',
         }
 
     
 
     let items = [];
+    let filteredItems = [];
+    let packs = [];
+    let prompts = [];
+    let cards = [];
+    
+    async function fetchUserCards() {
+        if (user_pk) {
+            try{
+                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const data = await res.json();
+                cards = data.cards;
+                user.address=user_pk
+                user.username='User'+user_pk.substring(user_pk.length - 4);
+                for(let i=0; i<cards.length; i++){
+                    cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
+                }
+                filteredItems = cards;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    async function fetchUserPacks() {
+        if (user_pk) {
+            try{
+                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const data = await res.json();
+                packs = data.packets;
+                user.address=user_pk
+                user.username='User'+user_pk.substring(user_pk.length - 4);
+                for(let i=0; i<packs.length; i++){
+                    packs[i].img_path = Packet;
+                }
+                filteredItems = packs;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    async function fetchUserPrompts() {
+        if (user_pk) {
+            try{
+                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const data = await res.json();
+                prompts = data.prompts;
+                user.address=user_pk
+                user.username='User'+user_pk.substring(user_pk.length - 4);
+                filteredItems = prompts;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
     async function getUserData() {
         if (user_pk){
             try {
@@ -52,12 +111,25 @@
         }
     }
 
-    let filteredItems = items;
+
 
     onMount(async () => {
         await init();
-        await getUserData();
+        await fetchUserCards();
+        filteredItems = cards;
     });
+
+    $: {
+    if (selectedNFTType === 'Cards') {
+        fetchUserCards();
+    } else if (selectedNFTType === 'Prompts') {
+        fetchUserPrompts();
+    } else if (selectedNFTType === 'Packs') {
+        fetchUserPacks();
+    }
+    }
+    $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
+
 
 </script>
 
@@ -73,8 +145,9 @@
         <!-- PROFILE INFO -->
         <Profile userId={user_pk} username={user.username} avatar={user.avatar} address={user.address} />
 
-        <div class="flex flex-col  w-full items-center pt-10">
-            <!-- <div class="w-full flex -mt-[60px] justify-end"><MintButton /></div> -->
+        <div class="flex flex-col  w-full items-center -my-10">
+
+            <TypeSelector bind:selectedNFTType/>
 
             <!-- INFOS -->
             <UtilityBar items={items} bind:filteredItems={filteredItems} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"collection"}/>

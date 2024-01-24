@@ -69,31 +69,23 @@
 
 <button disabled={item.isListed} on:click={()=>selectPrompt(item)}>
     <div class="relative w-full h-full rounded-xl  {(blocked || freezed) ? 'opacity-30' : 'group-hover:scale-105 transition-transform duration-300 '} {RARITY_COLORS[rarityConverter(item.rarity)]}">
-        <img src={CardTheme} class={`w-full h-full rounded-xl p-2`} alt="card theme" />
-
-        <div class="absolute inset-0 flex flex-col justify-between items-center">
-            <!-- Top Content -->
-            <div class="mt-[10%]">
-                <div class="h-32 w-32 flex items-center justify-center">
-                    <img src={categoryIcon} alt="category icon" class="w-16 h-16" />
-                </div>
-            </div>
-            <!-- Middle Content -->
-            <div class="mb-[15%]">
-                <div class="h-12 w-42 flex items-center justify-center">
-                    <span class="inline-block text-lg text-transparent bg-clip-text {RARITY_COLORS[rarityConverter(item.rarity)]} ">{item.name}</span>
-                </div>
-            </div>
-            <!-- Bottom Content -->
-            <div class="mb-[15%]">
-                <div class="flex w-full items-center text-center justify-center">
-                    <div class="rounded-full w-10 h-10 flex items-center justify-center {RARITY_COLORS[rarityConverter(item.rarity)]} {rarityConverter(item.rarity) === 'common' ? 'bg-white/60' : ''}">
-                        <div class="text-center self-center text-card_background w-full h-full">
-                            <div class="flex items-center justify-center h-full">{item.category}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <img src={CardTheme} class={`w-full h-full rounded-xl xl-p-4 lg:p-2 sm:p-1`} alt="card theme" />
+  
+    <div class="absolute inset-0 flex flex-col justify-between items-center p-4 py-10">
+      <!-- Top Content -->
+      <div class="flex flex-col items-center">
+        <img src={categoryIcon} alt="category icon" class="w-1/4 max-w-xs" />
+    </div>
+      <!-- Middle Content -->
+      <div>
+        <span class="text-center text-lg text-transparent bg-clip-text {RARITY_COLORS[rarityConverter(item.rarity)]}">{item.name}</span>
+      </div>
+      <!-- Bottom Content -->
+      <div class="flex items-center justify-center rounded-full lg:w-10 lg:h-10 sm:w-6 sm:h-6 {RARITY_COLORS[rarityConverter(item.rarity)]} {rarityConverter(item.rarity) === 'common' ? 'bg-white/60' : ''}">
+        <div class="text-center text-base sm:text-sm md:text-lg lg:text-xl text-card_background ">
+          {item.category + 1}
+        </div>
+      </div>
             
             {#if $selectedPrompts[categoryConverter(item.category)]?.id === item.id}
                 <div class="absolute w-full h-full top-0 bg-white/50 border-4 rounded-md" style="border-color: {category_colors[categoryConverter(item.category)]};"></div>

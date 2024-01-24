@@ -52,7 +52,6 @@
 </script>
 
 
-<div bind:this={promptsRef} class="w-full px-28 -mt-28">
     <div class="flex flex-col w-full ">
         <div class="flex flex-col h-full items-start  pt-2 gap-2 rounded-xl">
 
@@ -61,7 +60,7 @@
                     {#each CATEGORIES as category}
                         <div class="gap-2 flex flex-col items-center border-white/20 h-full p-6">
                             <span class="text-xs {$selectedPrompts[category] ? 'text-primary font-bold' : 'text-secondary font-semibold'}">{category.toUpperCase()}</span>
-                            <button on:click={() => selectCategory(category)} class="w-full h-[280px] rounded-xl bg-card_background hover:scale-[103%] duration-200 shadow-md">
+                            <button on:click={() => selectCategory(category)} class="w-full rounded-xl bg-card_background hover:scale-[103%] duration-200 shadow-md">
                                 {#if $selectedPrompts[category]}
                                 <PromptCardFull item={$selectedPrompts[category]} />
                                 {:else}
@@ -79,4 +78,3 @@
             </div>
         </div>
     </div>
-</div>
