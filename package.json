@@ -45,7 +45,7 @@
 		"@nomicfoundation/solidity-analyzer": "^0.1.1",
 		"@nomicfoundation/solidity-analyzer-linux-x64-musl": "^0.1.1",
 		"@skeletonlabs/skeleton": "^2.7.1",
-		"chart.js": "2.9.4",
+		"chart.js": "^4.4.1",
 		"hardhat": "^2.19.4",
 		"svelte-clipboard": "^1.0.0"
 	}

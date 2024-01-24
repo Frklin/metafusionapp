@@ -63,7 +63,7 @@ onMount(async () => {
 
                     <PriceBox itemID={card.id} itemPrice={card.price} itemType={2} itemOwner={card.owner} itemListed={card.isListed}/>
 
-                    <HistoryPrice />
+                    <HistoryPrice itemID={card.id} itemType={"card"}/>
 
                     <Activity itemID={card.id} itemType={"card"}/>
                 </div>

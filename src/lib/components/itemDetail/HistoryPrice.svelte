@@ -1,32 +1,92 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-    import Chart from "chart.js";
+    import Chart from "chart.js/auto";
 
     
-    export let priceHistory: any = [];
-    
-    function renderChart() {
-    // var ctx = document.getElementById("price").getContext("2d");
-    //     var chart = new Chart(ctx, {
-    //     type: "line",
-    //     data: {
-    //         labels: ["January", "February", "March", "April", "May", "June", "July"],
-    //         datasets: [
-    //         {
-    //             label: "My First dataset",
-    //             backgroundColor: "rgb(255, 99, 132)",
-    //             borderColor: "rgb(255, 99, 132)",
-    //             data: [0, 10, 5, 2, 20, 30, 45]
-    //         }
-    //         ]
-    //     },
-    //     options: {}
-    //     });
-    }
+    let ctx: HTMLCanvasElement | undefined;
+    let chart: Chart | undefined;
 
-    onMount(() => {
-        renderChart();
+
+    export let itemID: number;
+    export let itemType: String;
+
+    let priceHistory: any;
+    async function get_priceHistory() {
+        try{
+        const res = await fetch('http://localhost:3000/'+itemType+'/'+itemID+'/transactions');
+        if (!res.ok) {
+            throw new Error('Network response was not ok');
+        }
+        let count = 0;
+        let activity = await res.json();
+        console.log(activity);
+        for (let i = 0; i < activity.length; i++) {
+            if (activity[i].price != 0) {
+                priceHistory[count] = {date: activity[i].date, price: activity[i].price};
+                count++;
+            }
+        }
+        console.log(priceHistory);
+        } catch (err) {
+            console.log(err);
+        }
+        }
+
+    onMount(async () => {
+        await get_priceHistory();
     });
+    $: if (ctx) {
+  if (chart) {
+    chart.destroy();
+  }
+
+  chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: priceHistory.map(item => item.date),
+      datasets: [{
+        label: "Price",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(255, 99, 132)",
+        data: priceHistory.map(item => item.price),
+        tension: 0.4, // This will make the line smoother
+      }]
+    },
+    options: {
+      layout: {
+        padding: {
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: 10
+        }
+      },
+      scales: {
+        y: { // defining the Y-axis
+          title: {
+            display: true,
+            text: 'Price (ETH)'
+          }
+        },
+        x: { // defining the X-axis
+          title: {
+            display: true,
+            text: 'Transaction'
+          }
+        }
+      },
+      elements: {
+        line: {
+          borderWidth: 3
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false, // This will allow the chart to fill the container
+    }
+  });
+}
+
+
 
 </script>
 
@@ -41,7 +101,9 @@
                 <h1 class="text-3xl font-semibold text-secondary">No Price History</h1>
             </div>
             {:else}
-                <!-- <canvas id="price"></canvas> -->
+                <div class="w-full h-full">
+                    <canvas bind:this={ctx}  id="price"></canvas>
+                </div>
             {/if}
         </div>
     </div>

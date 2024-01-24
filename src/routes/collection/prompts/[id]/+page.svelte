@@ -64,7 +64,7 @@
 
                     <PriceBox itemID={prompt.id} itemPrice={prompt.price} itemType={1} itemOwner={prompt.owner} itemListed={prompt.isListed}/>
 
-                    <HistoryPrice />
+                    <HistoryPrice itemID={prompt.id} itemType={"prompt"}/>
 
                     <Activity itemID={prompt.id} itemType={"prompt"}/>
                 </div>

@@ -62,7 +62,7 @@
 
                     <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} itemOwner={pack.owner} itemListed={pack.isListed}/>
 
-                    <HistoryPrice />
+                    <HistoryPrice itemID={pack.id} itemType={"packet"}/>
 
                     <Activity itemID={pack.id} itemType={"packet"}/>
                 </div>
