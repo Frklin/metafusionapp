@@ -10,11 +10,8 @@
     
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
-	import PromptCardFull from '$lib/components/PromptCardFull.svelte';
 
     let packId;
-
-
     let pack = {};
 
     $: if (packId) {

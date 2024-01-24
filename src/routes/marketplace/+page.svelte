@@ -6,8 +6,6 @@
     import { onMount } from 'svelte';
 
 
-    import pack1234 from '$lib/assets/Packs/10.png';
-
     import Packet from '$lib/assets/Packs/packet.jpg'
 	import Cover from '$lib/components/Cover.svelte';
 	import TypeSelector from '$lib/components/marketplace/TypeSelector.svelte';

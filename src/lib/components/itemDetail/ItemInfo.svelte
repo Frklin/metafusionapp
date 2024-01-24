@@ -16,7 +16,7 @@
         <div class="flex flex-row gap-1">
             <h4 class="text-sm font-normal text-secondary">Owned by</h4>
             <a href="{'/profile/'+itemOwner}">
-                <h4 class="text-sm font-normal text-button cursor-pointer hover:text-blue-400">{localStorage.getItem(itemOwner.toString()) ? localStorage.getItem(itemOwner.toString()) : addressFormatter(itemOwner)}</h4>
+                <h4 class="text-sm font-normal text-button cursor-pointer hover:text-blue-400">{localStorage.getItem(itemOwner) ? localStorage.getItem(itemOwner) : addressFormatter(itemOwner)}</h4>
             </a>
         </div>
     </div>

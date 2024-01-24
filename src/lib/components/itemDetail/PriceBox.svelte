@@ -30,7 +30,7 @@
         } else {
             selected_function = buyImage;
         }
-
+        console.log(itemID)
         selected_function(itemID, price.toString()).then((res) => {
             location.reload();
         });
@@ -52,7 +52,7 @@
         </div>
     </div>
     {:else}
-    <div class="flex justify-center items-center h-full w-full"><h1 class="text-3xl font-semibold text-secondary">Item Not Listed</h1></div>
+    <div class="flex justify-center items-center {itemType==1 ? 'py-6' : 'py-4'} h-full w-full"><h1 class="text-3xl font-semibold text-secondary">Item Not Listed</h1></div>
     {/if}
 
     {#if isMine}

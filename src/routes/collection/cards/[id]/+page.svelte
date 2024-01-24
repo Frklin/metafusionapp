@@ -11,8 +11,7 @@ import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
 import PromptList from '$lib/components/itemDetail/PromptList.svelte';
 import { page } from '$app/stores';
 import { onMount } from 'svelte';
-	import { dataLength } from 'ethers';
-	import { doc } from 'prettier';
+
 
 let cardId;
 

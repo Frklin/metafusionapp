@@ -10,6 +10,7 @@
     import GridView from '$lib/components/marketplace/GridView.svelte';
     import UtilityBar from '$lib/components/filters/UtilityBar.svelte';
     import FilterTab from '$lib/components/filters/FilterTab.svelte';
+    import Packet from '$lib/assets/Packs/packet.jpg'
     import { sortOptions } from '$lib/constants.js';
     import { user_pk } from '$lib';
     import { onMount } from 'svelte';
@@ -37,13 +38,17 @@
                 const res = await fetch('http://localhost:3000/user/'+user_pk);
                 const data = await res.json();
                 let cards = data.cards;
+                let packs = data.packets;
                 user.address=user_pk
                 user.username='User'+user_pk.substring(user_pk.length - 4);
                 for(let i=0; i<cards.length; i++){
                     cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
                 }
+                for(let i=0; i<packs.length; i++){
+                    packs[i].img_path = Packet;
+                }
                 let prompts = data.prompts.filter(prompt => prompt.isFreezed == false);
-                items = prompts.concat(cards);//.concat(data.packets);
+                items = data.packets.concat(cards)//.concat(data.packets);
             } catch (err) {
                 console.error(err);
             }

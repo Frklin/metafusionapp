@@ -1,11 +1,11 @@
 <script>
 // @ts-nocheck
 
-    import Pack1032 from '$lib/assets/Packs/5.png';
     import Activity from '$lib/components/itemDetail/Activity.svelte';
     import HistoryPrice from '$lib/components/itemDetail/HistoryPrice.svelte';
     import ItemInfo from '$lib/components/itemDetail/ItemInfo.svelte';
     import PriceBox from '$lib/components/itemDetail/PriceBox.svelte';
+    import Packet from '$lib/assets/Packs/packet.jpg'
 
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
@@ -26,6 +26,7 @@
             }
             pack = await packResponse.json();
             pack.n = packId.slice(-4);
+            pack.img_path = Packet
 
         } catch (err) {
             error = err;
@@ -54,7 +55,7 @@
                 </div>
                 <!-- RIGHT PART -->
                 <div class="lg:col-span-4 flex flex-col gap-6">
-                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner_name} itemEdition={pack.collection}/>
+                    <ItemInfo itemType={0} itemNumber={pack.n} itemOwner={pack.owner} itemEdition={pack.collection}/>
 
                     <PriceBox itemID={pack.id} itemPrice={pack.price} itemType={0} itemOwner={pack.owner} itemListed={pack.isListed}/>
 

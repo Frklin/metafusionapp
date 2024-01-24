@@ -21,7 +21,6 @@
         category === 'handoff' ? HandoffIcon :
         null;
 
-    $: console.log(RARITY_COLORS[rarityConverter(item.rarity)]);
 </script>
 
 

@@ -5,28 +5,38 @@
     export let itemID: number;
     export let itemPrice: number;
 
-    import { openPacket, listPacket, unlistPacket } from '$lib/metafusion_interactions';
+    import { openPacket, unlistPacket } from '$lib/metafusion_interactions';
+    import Modal from '$lib/components/itemDetail/buttons/ListModal.svelte';
+
+    let isModalOpen = false;
+    const handleClose = () => {
+        isModalOpen = false;
+    }
 
     function openPack() {
-        console.log('opening packet');
-        openPacket(itemID);
+        console.log('opening packet', itemID);
+        openPacket(itemID).then((res) => {
+            location.replace('/collection');
+        });
     }
 
     function listUnlistItem() {
         if (itemListed) {
             unlistItem();
         } else {
-            listItem();
+            openModal();
         }        
     }
 
-    function listItem() {
-        itemListed = true;
+    function openModal() {
+        isModalOpen = true;
     }
-
+    
     function unlistItem() {
-        itemListed = false;
-        unlistPacket(itemID);
+        unlistPacket(itemID).then((res) => {
+                location.reload();
+                itemListed = false;
+            });
     }
 
 
@@ -45,8 +55,12 @@
             {/if}
         </div>
     </button>
-    <button on:click={()=>listUnlistItem()}  class="flex flex-row justify-center items-center w-full h-full border {itemListed? 'bg-red-500 hover:bg-red-400' : 'hover:bg-blue-500  bg-button'}  duration-200 border-white/20 rounded-xl">
+    <button  data-modal-target="crud-modal" data-modal-toggle="crud-modal" on:click={()=>listUnlistItem() } class="flex flex-row justify-center items-center w-full h-full border {itemListed ? 'bg-red-500 hover:bg-red-400' : 'hover:bg-blue-500  bg-button'}  duration-200  border-white/20 rounded-xl">
         <h4 class="text-base font-semibold text-primary">{itemListed? 'Remove Listing' : 'List Item'}</h4>
     </button>
     
+</div>
+
+<div>
+    <Modal item={itemID} itemType={'packet'} open={isModalOpen} itemListed={itemListed} on:close={handleClose}/>
 </div>

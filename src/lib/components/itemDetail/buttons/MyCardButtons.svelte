@@ -4,7 +4,7 @@
     export let itemID: number;
     export let itemPrice: number;
 
-    import { destroyImage, listImage, unlistImage } from '$lib/metafusion_interactions';
+    import { destroyImage, unlistImage } from '$lib/metafusion_interactions';
     import Modal from '$lib/components/itemDetail/buttons/ListModal.svelte';
 
     let isModalOpen = false;
