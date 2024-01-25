@@ -12,6 +12,7 @@
     import { writable } from 'svelte/store';
 	import ForgeButton from '$lib/components/create/ForgeButton.svelte';
 	import StickyPromptCreate from '$lib/components/create/StickyPromptCreate.svelte';
+	import { list } from 'postcss';
 
     const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
     let mainRef: HTMLDivElement;
@@ -33,6 +34,7 @@
     });
     let selectedRarities = new Set()
     let selectedPromptCounts = new Set()
+    let selectedStatus = 'All';
     let filterTabOpen = false;
     let categoryFocused = writable(false);
     let isSticky = writable(false);
@@ -49,16 +51,32 @@
             }
         } else {
             console.log("no user_pk")
+            prompts = [];
+            filteredPrompts = [];
         }
     }
 
-    function handleScroll() {
-        const rect = promptsRef.getBoundingClientRect();
-        isSticky.set(rect.bottom <= 0); 
+    function filterPrompts() {
+        return (prompts.length > 0) ? prompts.filter((prompt) => {
+                    if (selectedStatus === 'All') return true;
+                    else if (selectedStatus === 'Listed') return prompt.isListed;
+                    else if (selectedStatus === 'Not Listed') return !prompt.isListed;
+                }).filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+                }).filter(prompt => {
+                    if (selectedRarities.size === 0) return true; 
+                    return selectedRarities.has(rarityConverter(prompt.rarity))
+                }).filter((prompt) => {
+                            return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+                })
+                 : filteredPrompts;
     }
 
     onMount(async () => {
         await init();
+
         await fetchPrompts();
     });
 
@@ -67,9 +85,7 @@
         const rect = promptsRef.getBoundingClientRect();
         const offset = window.pageYOffset || document.documentElement.scrollTop;
         isSticky.set(rect.bottom <= 0)
-        // isSticky.set(offset > 0); // Set to true as soon as we scroll down 
-        };
-        
+        }; 
 
         window.addEventListener('scroll', handleScroll);
 
@@ -79,58 +95,49 @@
     });
 
     $: isForgable = Object.values($selectedPrompts).some(prompt => prompt != null && categoryConverter(prompt.category) === 'character');
-    $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
-                if (selectedCategories.size === 0) return true; 
-                return selectedCategories.has(categoryConverter(prompt.category))
-    }).filter(prompt => {
-        if (selectedRarities.size === 0) return true; 
-        return selectedRarities.has(rarityConverter(prompt.rarity))
-    }).filter((prompt) => {
-                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
-            }) : prompts;
+    $: filteredPrompts = filterPrompts();
 
 </script>
 
 
-{#if prompts.length > 0}
 <div bind:this={mainRef} class="flex w-full flex-col items-start" id="main">
     <div class="relative w-full" id="main">
         <Cover  fromWhere='create'/>
     </div>
-
-        <!-- BOTTOM PART -->
-        <div class="absolute top-1/3 w-full px-10">
-            <div bind:this={promptsRef} class="w-full px-28 -mt-28">
+    
+    <!-- BOTTOM PART -->
+    <div class="absolute top-1/3 w-full px-10">
+        <div bind:this={promptsRef} class="w-full px-28 -mt-28">
             <PromptCreate  bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen={filterTabOpen} scrollTarget={scrollTarget} promptsRef={promptsRef}/>
-            </div>
-            <!-- STICKY PROMPT -->
-            <StickyPromptCreate bind:selectedPrompts bind:isSticky={isSticky} bind:mainRef={mainRef} bind:isForgable />
-
-            <!-- FORGE BUTTON -->
-            <ForgeButton bind:isForgable={isForgable} selectedPrompts={selectedPrompts}/>
-
-            <div bind:this={scrollTarget} class="flex flex-col h-full w-full divide-y divide-white/20">
-
-                <UtilityBar items={prompts} bind:filteredItems={filteredPrompts} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"create"}/>
-
-                <div class="flex w-full scrollbar">
-                    {#if filterTabOpen}
-                        <FilterTab items={prompts} bind:filteredItems={filteredPrompts} itemsType={"Prompts"} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
-                    {/if}
-                    <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
-                        {#if filteredPrompts.length === 0}
-                            <div class="flex flex-col items-center justify-center w-full h-full">
-                                <span class="text-2xl font-bold text-primary">No Prompts Found</span>
-                            </div>
-                        {/if}
-                        <PromptGridCreate bind:items={filteredPrompts} bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen mainRef={mainRef}/>
+        </div>
+        <!-- STICKY PROMPT -->
+        <StickyPromptCreate bind:selectedPrompts bind:isSticky={isSticky} bind:mainRef={mainRef} bind:isForgable />
+        
+        <!-- FORGE BUTTON -->
+        <ForgeButton bind:isForgable={isForgable} selectedPrompts={selectedPrompts}/>
+        
+        <div bind:this={scrollTarget} class="flex flex-col h-full w-full divide-y divide-white/20">
+            
+            {#if prompts.length > 0}
+            <UtilityBar items={prompts} bind:filteredItems={filteredPrompts} bind:filterTabOpen bind:searchQuery bind:selectedSort fromWhere={"create"}/>
+            
+            <div class="flex w-full scrollbar">
+                {#if filterTabOpen}
+                <FilterTab items={prompts} bind:filteredItems={filteredPrompts} itemsType={"Prompts"} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities bind:selectedStatus/>
+                {/if}
+                <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
+                    {#if filteredPrompts.length === 0}
+                    <div class="flex flex-col items-center justify-center w-full h-full">
+                        <span class="text-2xl font-bold text-primary">No Prompts Found</span>
                     </div>
+                    {/if}
+                    <PromptGridCreate bind:items={filteredPrompts} bind:selectedPrompts bind:selectedCategories bind:categoryFocused bind:filterTabOpen mainRef={mainRef}/>
                 </div>
-
             </div>
-
+            
+            {/if}
+        </div>
+        
         </div>
 
 </div>
-{/if}

@@ -2,13 +2,14 @@
     //@ts-nocheck
     export let items: any;
     export let filteredItems: any;
+    export let selectedStatus: string ;
  
     import SortButton from '$lib/assets/icons/sort.png';
 
     let showStatusFilter = true;
 
     let stati = ["All", "Listed", "Not Listed"]
-    let selectedStatus = "All"
+    // let selectedStatus = "All"
 
     function toggleStatusFilter() {
         showStatusFilter = !showStatusFilter;
@@ -18,13 +19,14 @@
         if(selectedStatus === "All"){
             return items;
         } else if(selectedStatus === "Listed"){
-            filteredItems = items.filter((item: any) => item.listed === true);
+            return items.filter((item: any) => item.isListed);
         } else if(selectedStatus === "Not Listed"){
-            filteredItems = items.filter((item: any) => item.listed === false);
+            return items.filter((item: any) => !item.isListed);
         }
     }
     function selectStatus(view: string) {
-    selectedStatus = view;
+        selectedStatus = view;
+        filteredItems = filterStatus();
     }
  
  </script>
@@ -37,7 +39,7 @@
      </div>
  
      {#if showStatusFilter}
-     <div class="flex items-center w-full gap-x-1 rounded-lg justify-between  p-2 bg-card_background">
+     <div class="flex items-center w-full gap-x-1 rounded-lg justify-between  p-2">
         {#each stati as status}
         <button on:click={() => selectStatus(status)}
             class:bg-white={selectedStatus === status}
