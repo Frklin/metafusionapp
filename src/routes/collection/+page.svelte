@@ -10,7 +10,7 @@
     import TypeSelector from '$lib/components/marketplace/TypeSelector.svelte';
     import MintButton from '$lib/components/MintButton.svelte';    
     import { sortOptions, NFTTypes, profileImages } from '$lib/constants.js';
-    import { user_pk } from '$lib';
+    import { user_pk, categoryFromId } from '$lib';
     import { onMount } from 'svelte';
     import { MetaMaskStore, categoryConverter, rarityConverter } from '$lib';
 	import { filter } from '@skeletonlabs/skeleton';
@@ -89,6 +89,37 @@
         }
     }
 
+    function filterPrompts() {
+        return items.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+                }).filter(prompt => {
+                    if (selectedRarities.size === 0) return true; 
+                    return selectedRarities.has(rarityConverter(prompt.rarity))
+                }).filter((prompt) => {
+                    return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+                }).filter((prompt) => {
+                    if (selectedStatus === 'All') return true;
+                    else if (selectedStatus === 'Listed') return prompt.isListed;
+                    else if (selectedStatus === 'Not Listed') return !prompt.isListed;
+                })
+    }
+
+    function filterCards() {
+        return items.filter((card) => {
+                return card.prompts.includes(searchQuery.toLowerCase())
+            }).filter((card) => {
+                if (selectedCategories.size === 0) return true;
+                return categoryFromId(card.id).filter((prompt) => selectedCategories.has(prompt)).length == selectedCategories.size;
+            }).filter((card) => {
+                    if (selectedStatus === 'All') return true;
+                    else if (selectedStatus === 'Listed') return card.isListed;
+                    else if (selectedStatus === 'Not Listed') return !card.isListed;
+            })
+    }
+
+
 
     onMount(async () => {
         await init();
@@ -106,17 +137,8 @@
     }
     }
     $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
-    $: filteredItems = (items.length > 0 && selectedNFTType==='Prompts') ?  items.filter(prompt => {
-                if (selectedCategories.size === 0) return true; 
-                return selectedCategories.has(categoryConverter(prompt.category))
-    }).filter(prompt => {
-        if (selectedRarities.size === 0) return true; 
-        return selectedRarities.has(rarityConverter(prompt.rarity))
-    }).filter((prompt) => {
-                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
-            })
- : filteredItems;
+    $: filteredItems = items.length > 0 ? selectedNFTType === 'Cards' ? filterCards() : selectedNFTType === 'Prompts' ? filterPrompts() : filteredItems : filteredItems;
+
 
 
 </script>

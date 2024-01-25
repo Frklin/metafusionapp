@@ -19,10 +19,8 @@
         if(selectedStatus === "All"){
             return items;
         } else if(selectedStatus === "Listed"){
-            console.log(items.filter((item: any) => item.isListed).length)
             return items.filter((item: any) => item.isListed);
         } else if(selectedStatus === "Not Listed"){
-            console.log(items.filter((item: any) => !item.isListed).length)
             return items.filter((item: any) => !item.isListed);
         }
     }
