@@ -16,7 +16,7 @@
     function openPack() {
         openPacket(itemID).then((res) => {
             let numPacketOpened = localStorage.getItem("numPacketOpened") || 0
-            let updatedNumPacketOpened = numPacketOpened + 1
+            let updatedNumPacketOpened: number = numPacketOpened + 1
             localStorage.setItem("numPacketOpened", updatedNumPacketOpened);
             location.replace('/collection');
         });
