@@ -83,13 +83,18 @@
                 for (let i = 0; i < prompts.length; i++) {
                     prompts[i].isNew = false;
                 }
-                numPacketOpened = localStorage.getItem('numPacketOpened') || 0;
-                for (let i = prompts.length - 1; i > prompts.length - (numPacketOpened * 8); i--) {
-                    prompts[i].isNew = true;
+                let numPacketOpened = localStorage.getItem('numPacketOpened') || 0;
+                for (let i = 0; i < (numPacketOpened * 8); i++) {
+                    console.log(prompts.length - 1 - i, prompts.length)
+                    prompts[prompts.length - 1 - i].isNew = true;
                 }
-                console.log(prompts)
-                console.log(localStorage.getItem('numPacketOpened') || 0)
                 localStorage.setItem('numPacketOpened', 0);
+                prompts.sort((a, b) => {
+                    if (a.isNew && !b.isNew) return -1;
+                    else if (!a.isNew && b.isNew) return 1;
+                    else return 0;
+                })
+                
                 user.address=user_pk
                 user.username='User'+user_pk.substring(user_pk.length - 4);
                 filteredItems = prompts;
@@ -133,7 +138,7 @@
 
     onMount(async () => {
         await init();
-        await fetchUserCards();
+        await fetchUserPrompts();
         // filteredItems = cards;
     });
 

@@ -27,9 +27,14 @@
     }
 </script>
 
-<div on:mouseover={removeNewField} class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300 {blocked ? 'opacity-30' : ''} {item.isNew ? 'bg-white' : RARITY_COLORS[rarityConverter(item.rarity)]}">
+<div  on:mouseover={removeNewField} class="w-full h-full rounded-xl {item.isNew ? 'p-1 bg-red-400' : ''}">
+<div class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300 {blocked ? 'opacity-30' : ''} {RARITY_COLORS[rarityConverter(item.rarity)]}">
     <img src={CardTheme} class={`w-full h-full rounded-xl xl-p-4 lg:p-2 sm:p-1`} alt="card theme" />
   
+    {#if item.isNew}
+    <div class="absolute top-0 right-0 flex text-center p-1 px-2 bg-red-500 text-white rounded-lg">NEW</div>
+    {/if}
+
     <div class="absolute inset-0 flex flex-col justify-between items-center p-4 py-10">
       <!-- Top Content -->
       <div class="flex flex-col items-center">
@@ -47,6 +52,6 @@
       </div>
     </div>
 </div>
-
+</div>
 
 

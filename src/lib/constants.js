@@ -16,7 +16,7 @@ export const views =  ['list', 'grid', 'table'];
 export const RARITIES = ["common", "bronze", "silver", "gold", "mythic"];
 
 export const RARITY_COLORS = {
-    'common': 'border-none text-white/60',
+    'common': 'bg-card_background text-white/60',
     'bronze': 'bg-bronzeBorder',
     'silver': 'bg-silverBorder',
     'gold': 'bg-goldBorder',
