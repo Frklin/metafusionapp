@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import SortButton from '$lib/assets/icons/sort.png';
     import InfoButton from '$lib/assets/icons/info.png';
     import {forgePacket} from '$lib/metafusion_interactions'
@@ -16,6 +16,8 @@
     let numberOfPackets = 1;
     let maxNumberOfPackets = 10;
     let numberOfPacketsToggled = false;
+    let collectionId = 1;
+    let remainingPackets = 0;
 
 
     const close = () => {
@@ -45,18 +47,29 @@
         price = computePrice();
     }
 
-    async function loopMint(collectionId) {
+    async function loopMint() {
         for (let i = 0; i < numberOfPackets; i++){
             await forgePacket(collectionId)
         }
     }
 
     function mintPacket() {
-        loopMint(1).then(() => {
+        loopMint().then(() => {
             location.reload();
             close();
         })
     }
+
+    async function getRemainingPackets() {
+        let response = await fetch('http://localhost:3000/packets/' + collectionId + '/remaining');
+        let data = await response.json();
+        console.log(data);
+        remainingPackets = data.remaining;
+    }
+
+    onMount(async () => {
+        await getRemainingPackets();
+    })
 
 
     $: price = computePrice();
@@ -116,7 +129,7 @@
                         <div class="flex flex-row w-full justify-between gap-6">
                             <div class="flex flex-col items-center justify-between gap-4 rounded-lg border border-white/20 w-full p-4">
                                 <span class="text-secondary font-semibold text-sm">Remaining</span>
-                                <span class="text-white font-semibold text-xl">987</span>
+                                <span class="text-white font-semibold text-xl">{remainingPackets}</span>
                             </div>
                             <div class="flex flex-col items-center justify-between gap-4 rounded-lg border border-white/20 w-full p-4">
                                 <span class="text-secondary font-semibold text-sm">Edition</span>

@@ -190,8 +190,15 @@ export function categoryConverter(category: number) {
 }
 
 
-export function convertIdtoHexCode(query: number) {
-   // ['
- return ""
+export function categoryFromId(cardId: string) : string[] {
+  let cardCategories: string[] = [];
+  for (let i = 0; i < 6; i++) {
+    if ((cardId.slice(2 + 8 * i, 2 + 8 + 8 * i)) != "00000000") {
+      cardCategories.push(categoryConverter(i));
+    }
+  }
+
+  return cardCategories;
 }
+
 

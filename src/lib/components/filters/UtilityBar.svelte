@@ -13,7 +13,7 @@
 	import SearchBar from './SearchBar.svelte';
 	import ViewType from './ViewType.svelte';
     import SortTab from './SortTab.svelte';
-	import { categoryConverter, convertIdtoHexCode } from '$lib';
+	import { categoryConverter } from '$lib';
 
     function toggleFilterTab() {
         filterTabOpen = !filterTabOpen;

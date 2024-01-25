@@ -4,7 +4,7 @@
 
     import { NFTTypes, sortOptions } from '$lib/constants';
     import { onMount } from 'svelte';
-    import { categoryConverter, rarityConverter } from '$lib';
+    import { categoryConverter, rarityConverter, categoryFromId } from '$lib';
 
 
     import Packet from '$lib/assets/Packs/packet.jpg'
@@ -84,6 +84,8 @@
             error = err;
         }
     }
+
+
     onMount(async () => {
         await fetchCards();
         filteredItems = cards;
@@ -109,6 +111,12 @@
     }).filter((prompt) => {
                 return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                 categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+            }) : selectedNFTType === 'Cards' ? items.filter((card) => {
+                console.log(selectedCategories);
+                return card.prompts.includes(searchQuery.toLowerCase())
+            }).filter((card) => {
+                if (selectedCategories.size === 0) return true;
+                return categoryFromId(card.id).filter((prompt) => selectedCategories.has(prompt)).length == selectedCategories.size;
             }) : items;
 
 </script>

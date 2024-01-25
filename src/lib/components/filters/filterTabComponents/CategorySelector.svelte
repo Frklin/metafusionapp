@@ -7,7 +7,7 @@
 
     import { CATEGORIES } from "$lib/constants";
     import SortButton from '$lib/assets/icons/sort.png';
-	import { categoryConverter } from "$lib";
+	import { categoryConverter, categoryFromId } from "$lib";
 
     let showCategoryFilter: boolean = true;
 
@@ -31,9 +31,13 @@
             if (filteredItems[0].nft_type==1) {
                 return selectedCategories.has(categoryConverter(item.category));
             }
-            else if (filteredItems[0].nft_type==2) {
-                return item.prompts.some((prompt: { category: String; }) => selectedCategories.has(prompt.category));
+            if (filteredItems[0].nft_type==2) {
+                return categoryFromId(item.id).filter((prompt) => selectedCategories.has(prompt)).length == selectedCategories.size;
+                // return selectedCategories.intersection(categoryFromId(item.id));
             }
+            // else if (filteredItems[0].nft_type==2) {
+            //     return item.prompts.some((prompt: { category: String; }) => selectedCategories.has(prompt.category));
+            // }
         });
 
     }
