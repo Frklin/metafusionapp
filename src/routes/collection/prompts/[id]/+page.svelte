@@ -29,7 +29,6 @@
             }
             prompt = await promptResponse.json();
             prompt.n = promptId.slice(-4);
-
         } catch (err) {
             error = err;
         }

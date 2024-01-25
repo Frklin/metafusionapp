@@ -106,8 +106,6 @@
     }).filter(prompt => {
         if (selectedRarities.size === 0) return true; 
         return selectedRarities.has(rarityConverter(prompt.rarity))
-    }).filter((item) => {
-        return item.price >= minPrice && item.price <= maxPrice;
     }).filter((prompt) => {
                 return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                 categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
