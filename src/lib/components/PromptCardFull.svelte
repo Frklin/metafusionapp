@@ -21,9 +21,13 @@
         category === 'glasses' ? GlassesIcon :
         category === 'handoff' ? HandoffIcon :
         null;
+
+    function removeNewField() {
+      item.isNew = false
+    }
 </script>
 
-<div class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300 {blocked ? 'opacity-30' : ''} {RARITY_COLORS[rarityConverter(item.rarity)]}">
+<div on:mouseover={removeNewField} class="relative w-full h-full rounded-xl group-hover:scale-105 transition-transform duration-300 {blocked ? 'opacity-30' : ''} {item.isNew ? 'bg-white' : RARITY_COLORS[rarityConverter(item.rarity)]}">
     <img src={CardTheme} class={`w-full h-full rounded-xl xl-p-4 lg:p-2 sm:p-1`} alt="card theme" />
   
     <div class="absolute inset-0 flex flex-col justify-between items-center p-4 py-10">

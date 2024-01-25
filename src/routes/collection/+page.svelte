@@ -22,7 +22,7 @@
     let selectedCategories = new Set()
     let selectedPromptCounts = new Set()
     let selectedRarities = new Set()
-    let selectedNFTType = 'Cards';
+    let selectedNFTType = 'Prompts';
     let user = {
             username: '',
             avatar: profileImages[Math.floor(Math.random() * profileImages.length)],
@@ -79,6 +79,16 @@
                 const res = await fetch('http://localhost:3000/user/'+user_pk);
                 const data = await res.json();
                 prompts = data.prompts;
+                for (let i = 0; i < prompts.length; i++) {
+                    prompts[i].isNew = false;
+                }
+                numPacketOpened = localStorage.getItem('numPacketOpened') || 0;
+                for (let i = prompts.length - 1; i > prompts.length - (numPacketOpened * 8); i--) {
+                    prompts[i].isNew = true;
+                }
+                console.log(prompts)
+                console.log(localStorage.getItem('numPacketOpened') || 0)
+                localStorage.setItem('numPacketOpened', 0);
                 user.address=user_pk
                 user.username='User'+user_pk.substring(user_pk.length - 4);
                 filteredItems = prompts;

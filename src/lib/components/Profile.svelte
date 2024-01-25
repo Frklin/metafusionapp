@@ -1,4 +1,5 @@
 <script lang='ts'>
+   //@ts-nocheck
     import { addressFormatter } from '$lib/index.js';
     import { clipboard } from '@skeletonlabs/skeleton';
     import { user_pk } from '$lib';

@@ -14,8 +14,10 @@
     }
 
     function openPack() {
-        console.log('opening packet', itemID);
         openPacket(itemID).then((res) => {
+            let numPacketOpened = localStorage.getItem("numPacketOpened") || 0
+            let updatedNumPacketOpened = numPacketOpened + 1
+            localStorage.setItem("numPacketOpened", updatedNumPacketOpened);
             location.replace('/collection');
         });
     }
