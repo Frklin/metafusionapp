@@ -16,10 +16,10 @@
     export let minPrice: number = 0;
     export let maxPrice: number = 1000000;
     export let selectedCategories: any = new Set()
-    let selectedPromptCounts: any = new Set()
     export let selectedRarities: any = new Set()
-
-
+    export let selectedStatus = 'All';
+    
+    let selectedPromptCounts: any = new Set()
     function filterPrice() {
         return filteredItems.filter((item:any) => {
             return item.price >= minPrice && item.price <= maxPrice;
@@ -45,7 +45,7 @@
 <div class="flex sticky top-[112px] flex-col w-[340px] h-dvh transition divide-y-2 divide-white/20 px-4 overflow-auto scrollbar">
 
     {#if fromWhere!=='marketplace'}
-    <ListedSelector items={items} bind:filteredItems />
+    <ListedSelector items={items} bind:filteredItems bind:selectedStatus />
     {/if}
 
     {#if fromWhere==='marketplace'}

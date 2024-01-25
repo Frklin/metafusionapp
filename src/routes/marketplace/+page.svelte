@@ -85,6 +85,27 @@
         }
     }
 
+    function filterPrompts() {
+        return items.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+                }).filter(prompt => {
+                    if (selectedRarities.size === 0) return true; 
+                    return selectedRarities.has(rarityConverter(prompt.rarity))
+                }).filter((prompt) => {
+                    return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+            })
+    }
+
+    function filterCards() {
+        return items.filter((card) => {
+                return card.prompts.includes(searchQuery.toLowerCase())
+            }).filter((card) => {
+                if (selectedCategories.size === 0) return true;
+                return categoryFromId(card.id).filter((prompt) => selectedCategories.has(prompt)).length == selectedCategories.size;
+            })
+    }
 
     onMount(async () => {
         await fetchCards();
@@ -102,22 +123,7 @@
 }
     // $: filteredItems = items//selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
     $: items = selectedNFTType === 'Cards' ? cards : selectedNFTType === 'Prompts' ? prompts : packs;
-    $: filteredItems = (items.length > 0 && selectedNFTType === 'Prompts') ?  items.filter(prompt => {
-                if (selectedCategories.size === 0) return true; 
-                return selectedCategories.has(categoryConverter(prompt.category))
-    }).filter(prompt => {
-        if (selectedRarities.size === 0) return true; 
-        return selectedRarities.has(rarityConverter(prompt.rarity))
-    }).filter((prompt) => {
-                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
-            }) : selectedNFTType === 'Cards' ? items.filter((card) => {
-                console.log(selectedCategories);
-                return card.prompts.includes(searchQuery.toLowerCase())
-            }).filter((card) => {
-                if (selectedCategories.size === 0) return true;
-                return categoryFromId(card.id).filter((prompt) => selectedCategories.has(prompt)).length == selectedCategories.size;
-            }) : items;
+    $: filteredItems = items.length > 0 ? selectedNFTType === 'Cards' ? filterCards() : selectedNFTType === 'Prompts' ? filterPrompts() : items : items;
 
 </script>
 

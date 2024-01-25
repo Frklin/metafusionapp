@@ -12,6 +12,7 @@
     import { writable } from 'svelte/store';
 	import ForgeButton from '$lib/components/create/ForgeButton.svelte';
 	import StickyPromptCreate from '$lib/components/create/StickyPromptCreate.svelte';
+	import { list } from 'postcss';
 
     const { walletState, isMetaMaskPresent, connect, loaded, balance, init } = MetaMaskStore();
     let mainRef: HTMLDivElement;
@@ -33,6 +34,7 @@
     });
     let selectedRarities = new Set()
     let selectedPromptCounts = new Set()
+    let selectedStatus = 'All';
     let filterTabOpen = false;
     let categoryFocused = writable(false);
     let isSticky = writable(false);
@@ -52,9 +54,22 @@
         }
     }
 
-    function handleScroll() {
-        const rect = promptsRef.getBoundingClientRect();
-        isSticky.set(rect.bottom <= 0); 
+    function filterPrompts() {
+        return (prompts.length > 0) ? prompts.filter(prompt => {
+                if (selectedCategories.size === 0) return true; 
+                return selectedCategories.has(categoryConverter(prompt.category))
+                }).filter(prompt => {
+                    if (selectedRarities.size === 0) return true; 
+                    return selectedRarities.has(rarityConverter(prompt.rarity))
+                }).filter((prompt) => {
+                            return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
+                }).filter((prompt) => {
+                    if (selectedStatus === 'All') return true;
+                    else if (selectedStatus === 'Listed') return prompt.isListed;
+                    else if (selectedStatus === 'Not Listed') return !prompt.isListed;
+                })
+                 : prompts;
     }
 
     onMount(async () => {
@@ -67,9 +82,7 @@
         const rect = promptsRef.getBoundingClientRect();
         const offset = window.pageYOffset || document.documentElement.scrollTop;
         isSticky.set(rect.bottom <= 0)
-        // isSticky.set(offset > 0); // Set to true as soon as we scroll down 
-        };
-        
+        }; 
 
         window.addEventListener('scroll', handleScroll);
 
@@ -79,16 +92,7 @@
     });
 
     $: isForgable = Object.values($selectedPrompts).some(prompt => prompt != null && categoryConverter(prompt.category) === 'character');
-    $: filteredPrompts = (prompts.length > 0) ?  prompts.filter(prompt => {
-                if (selectedCategories.size === 0) return true; 
-                return selectedCategories.has(categoryConverter(prompt.category))
-    }).filter(prompt => {
-        if (selectedRarities.size === 0) return true; 
-        return selectedRarities.has(rarityConverter(prompt.rarity))
-    }).filter((prompt) => {
-                return prompt.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                categoryConverter(prompt.category).toLowerCase().includes(searchQuery.toLowerCase());
-            }) : prompts;
+    $: filteredPrompts =  filterPrompts();
 
 </script>
 
@@ -116,7 +120,7 @@
 
                 <div class="flex w-full scrollbar">
                     {#if filterTabOpen}
-                        <FilterTab items={prompts} bind:filteredItems={filteredPrompts} itemsType={"Prompts"} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities/>
+                        <FilterTab items={prompts} bind:filteredItems={filteredPrompts} itemsType={"Prompts"} fromWhere={"collection"} bind:selectedCategories bind:selectedPromptCounts bind:selectedRarities bind:selectedStatus/>
                     {/if}
                     <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
                         {#if filteredPrompts.length === 0}

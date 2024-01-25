@@ -41,7 +41,7 @@ onMount(async () => {
             </div>
             {:else}
             {#each item_activity as activity}
-            <div class="grid grid-cols-5 text-start items-center px-8 py-3 rounded-xl hover:bg-white/20 duration-100">
+            <div class="grid grid-cols-5 text-start items-center px-8 py-3 hover:rounded-xl hover:bg-white/20 duration-100">
                 <span class="text-sm font-semibold text-primary">Sell</span>
                 <span class="text-xs text-primary">{weiToETH(activity.price)} ETH</span>
                 <a href="{'/profile/'+activity.seller}"> <span class="text-sm text-button hover:text-blue-400">{addressFormatter(activity.seller)}</span></a>

@@ -23,6 +23,7 @@
     let selectedPromptCounts = new Set()
     let selectedRarities = new Set()
     let selectedNFTType = 'Cards';
+    let selectedStatus = 'All';
     let user = {
             username: '',
             avatar: profileImages[Math.floor(Math.random() * profileImages.length)],
@@ -142,7 +143,7 @@
 
             <div class="flex w-full scrollbar">
                 {#if filterTabOpen}
-                    <FilterTab items={items} bind:filteredItems={filteredItems} itemsType={selectedNFTType} bind:selectedCategories bind:selectedRarities fromWhere={"collection"} />
+                    <FilterTab items={items} bind:filteredItems={filteredItems} itemsType={selectedNFTType} bind:selectedCategories bind:selectedRarities bind:selectedStatus fromWhere={"collection"} />
                 {/if}
                 <div class="w-full pt-4 overflow-auto scrollbar min-h-dvh">
                     <GridView items={filteredItems} bind:filterTabOpen isMine={true} fromWhere={"collection"}/>
