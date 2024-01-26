@@ -42,7 +42,7 @@
     async function fetchPrompts() {
         if (user_pk){
             try {
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const res = await fetch('http://metafusion.homeworkheroes.it:3000/user/'+user_pk);
                 const data = await res.json();
                 prompts = data.prompts;
                 filteredPrompts = prompts;

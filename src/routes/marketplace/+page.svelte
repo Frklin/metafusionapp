@@ -36,13 +36,13 @@
 
     async function fetchCards() {
         try {
-            const cardResponse = await fetch('http://localhost:3000/cards');
+            const cardResponse = await fetch('http://metafusion.homeworkheroes.it:3000/cards');
             if (!cardResponse.ok) {
                 throw new Error('Network response was not ok');
             }
             cards = await cardResponse.json();
             for (let i = 0; i < cards.length; i++) {
-                cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
+                cards[i].img_path = 'http://metafusion.homeworkheroes.it:3000/card/' + cards[i].id + '/image';
                 cards[i].n =  cards[i].id.slice(-4);
             }
             filteredItems = cards;
@@ -53,7 +53,7 @@
 
     async function fetchPrompts() {
         try {
-            const promptResponse = await fetch('http://localhost:3000/prompts');
+            const promptResponse = await fetch('http://metafusion.homeworkheroes.it:3000/prompts');
             if (!promptResponse.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -70,7 +70,7 @@
 
     async function fetchPacks() {
         try {
-            const packResponse = await fetch('http://localhost:3000/packets');
+            const packResponse = await fetch('http://metafusion.homeworkheroes.it:3000/packets');
             if (!packResponse.ok) {
                 throw new Error('Network response was not ok');
             }

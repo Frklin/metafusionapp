@@ -20,7 +20,7 @@
 
     async function fetchPackByID(packId) {
         try {
-            const packResponse = await fetch('http://localhost:3000/packet/'+packId);
+            const packResponse = await fetch('http://metafusion.homeworkheroes.it:3000/packet/'+packId);
             if (!packResponse.ok) {
                 throw new Error('Network response was not ok');
             }

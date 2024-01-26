@@ -23,12 +23,12 @@ $: if (cardId) {
 
 async function fetchCardByID(cardID) {
     try {
-        const cardResponse = await fetch('http://localhost:3000/card/' + cardID);
+        const cardResponse = await fetch('http://metafusion.homeworkheroes.it:3000/card/' + cardID);
         if (!cardResponse.ok) {
             throw new Error('Network response was not ok');
         }
         card = await cardResponse.json();
-        card.img_path = 'http://localhost:3000/card/' + cardID + '/image';
+        card.img_path = 'http://metafusion.homeworkheroes.it:3000/card/' + cardID + '/image';
         card.n = cardID.slice(-4);
     } catch (err) {
         error = err;

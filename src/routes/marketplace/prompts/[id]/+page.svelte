@@ -24,7 +24,7 @@
 
     async function fetchPromptByID(promptId) {
         try {
-            const promptResponse = await fetch('http://localhost:3000/prompt/'+promptId);
+            const promptResponse = await fetch('http://metafusion.homeworkheroes.it:3000/prompt/'+promptId);
             if (!promptResponse.ok) {
                 throw new Error('Network response was not ok');
             }

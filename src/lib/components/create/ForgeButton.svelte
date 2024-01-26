@@ -13,7 +13,7 @@
         console.log(prompts_ids);
         createImage(prompts_ids).then(async (res) =>{
             try {
-                const res_2 = await fetch('http://localhost:3000/user/'+user_pk);
+                const res_2 = await fetch('http://metafusion.homeworkheroes.it:3000/user/'+user_pk);
                 const data = await res_2.json();
                 const imageId = data.cards[data.cards.length - 1].id;
                 location.replace('/collection/cards/'+imageId);

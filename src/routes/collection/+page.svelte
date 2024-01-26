@@ -41,13 +41,13 @@
     async function fetchUserCards() {
         if (user_pk) {
             try{
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const res = await fetch('http://metafusion.homeworkheroes.it:3000/user/'+user_pk);
                 const data = await res.json();
                 cards = data.cards;
                 user.address=user_pk
                 user.username='User'+user_pk.substring(user_pk.length - 4);
                 for(let i=0; i<cards.length; i++){
-                    cards[i].img_path = 'http://localhost:3000/card/' + cards[i].id + '/image';
+                    cards[i].img_path = 'http://metafusion.homeworkheroes.it:3000/card/' + cards[i].id + '/image';
                 }
                 filteredItems = cards;
             } catch (err) {
@@ -59,7 +59,7 @@
     async function fetchUserPacks() {
         if (user_pk) {
             try{
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const res = await fetch('http://metafusion.homeworkheroes.it:3000/user/'+user_pk);
                 const data = await res.json();
                 packs = data.packets;
                 user.address=user_pk
@@ -77,7 +77,7 @@
     async function fetchUserPrompts() {
         if (user_pk) {
             try{
-                const res = await fetch('http://localhost:3000/user/'+user_pk);
+                const res = await fetch('http://metafusion.homeworkheroes.it:3000/user/'+user_pk);
                 const data = await res.json();
                 prompts = data.prompts;
                 for (let i = 0; i < prompts.length; i++) {

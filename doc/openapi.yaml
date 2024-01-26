@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://metafusion.homeworkheroes.it:3000'
 info:
   title: MetaFusion web API 
   description: Metafusion NFT market backend REST APIs

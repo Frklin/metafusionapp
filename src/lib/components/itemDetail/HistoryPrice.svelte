@@ -14,7 +14,7 @@
     async function get_priceHistory() {
         try {
             priceHistory = [];
-            const res = await fetch('http://localhost:3000/' + itemType + '/' + itemID + '/transactions');
+            const res = await fetch('http://metafusion.homeworkheroes.it:3000/' + itemType + '/' + itemID + '/transactions');
             if (!res.ok) {
                 throw new Error('Network response was not ok');
             }

@@ -61,7 +61,7 @@
     }
 
     async function getRemainingPackets() {
-        let response = await fetch('http://localhost:3000/packets/' + collectionId + '/remaining');
+        let response = await fetch('http://metafusion.homeworkheroes.it:3000/packets/' + collectionId + '/remaining');
         let data = await response.json();
         console.log(data);
         remainingPackets = data.remaining;
