@@ -14,10 +14,11 @@
     }
 
     function openPack() {
-        openPacket(itemID).then((res) => {
+        openPacket(itemID).then(async (res) => {
             let numPacketOpened = localStorage.getItem("numPacketOpened") || 0
             let updatedNumPacketOpened: number = numPacketOpened + 1
             localStorage.setItem("numPacketOpened", updatedNumPacketOpened);
+            await new Promise(r => setTimeout(r, 1000));
             location.replace('/collection');
         });
     }

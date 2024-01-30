@@ -59,7 +59,7 @@
         <SortTab bind:filteredItems={filteredItems} bind:selectedSort />
     </div>
 
-    {#if (fromWhere === 'marletplace')}
+    {#if (fromWhere === 'marketplace')}
         <ViewType bind:selectedView={viewtype} />
     {/if}
 
